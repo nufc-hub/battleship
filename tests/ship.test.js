@@ -21,3 +21,11 @@ test('number of hits will be 0', () => {
 
   expect(ship.numberOfHits).toBe(0);
 });
+
+// Tests if the ship has been sunk.
+
+test('ship is not sunk and will return false', () => {
+  const ship = new Ship(3);
+
+  expect(ship.sunk).toBe(false);
+});
