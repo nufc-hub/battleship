@@ -5,7 +5,7 @@ class Ship {
   constructor(length) {
     this.length = length;
     this.numberOfHits = 0;
-    // this.sunk = false;
+    this.sunk = false;
   }
 
   // hit() function that increases the number of ‘hits’ in your ship.
