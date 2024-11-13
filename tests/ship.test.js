@@ -32,17 +32,17 @@ test('ship is not sunk initially', () => {
 
 // Tests if the ship has been hit
 
-test('hit increases the number of hits', () => {
+test('hit increases the number of hits to 1', () => {
   const ship = new Ship(3);
   //One hit.
-  ship.hit();
+  ship.handleHit();
   expect(ship.numberOfHits).toBe(1);
 });
 
-test('hit increases the number of hits', () => {
+test('hit increases the number of hits to 2', () => {
   const ship = new Ship(3);
   // Two hits.
-  ship.hit();
-  ship.hit();
+  ship.handleHit();
+  ship.handleHit();
   expect(ship.numberOfHits).toBe(2);
 });
