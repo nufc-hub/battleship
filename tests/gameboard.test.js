@@ -31,3 +31,21 @@ test('places a horizontal ship on a game board', () => {
   expect(gameBoard.board[1][5]).toBe(0);
   expect(gameBoard.board[1][1]).toBe(0);
 });
+
+// Verify vertical ship placement
+test('places a vertical ship on a game board', () => {
+  const verticalShip = new Ship(3, false);
+  const gameBoard = new GameBoard();
+  gameBoard.placeShip(2, 3, verticalShip);
+
+  // Verify the correct cells have been changed to 1
+  expect(gameBoard.board[1][2]).toBe(1); // If ship placed, value will be 1 not 0
+  expect(gameBoard.board[2][2]).toBe(1);
+  expect(gameBoard.board[3][2]).toBe(1);
+
+  // Verify other cells are still 0
+  expect(gameBoard.board[0][2]).toBe(0); // Checking cells close to ship for unintended consequences
+  expect(gameBoard.board[4][2]).toBe(0);
+  expect(gameBoard.board[1][3]).toBe(0);
+  expect(gameBoard.board[3][3]).toBe(0);
+});
