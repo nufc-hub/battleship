@@ -64,11 +64,18 @@ test('throws an error for out-of-bounds horizontal placement', () => {
 test('throws an error for overlapping ship placement', () => {
   const gameBoard = new GameBoard();
   const firstShip = new Ship(3, true); // Ship of length 3, horizontal
-  const overlappingShip = new Ship(2, true); // Ship of length 2, vertical
+  const overlappingShipHorizontal = new Ship(2, true); // Ship of length 2, horizontal
+  const overlappingShipVertical = new Ship(3, false); // Ship of length 3, vertical
 
   gameBoard.placeShip(2, 3, firstShip); // Place the first ship at row 2 column 3
 
+  // Horizontal
   expect(() => {
-    gameBoard.placeShip(2, 4, overlappingShip); // Attempt to place another ship at row 2 column 3
+    gameBoard.placeShip(2, 4, overlappingShipHorizontal); // Attempt to place another ship at row 2 column 3
+  }).toThrow('Ship placement overlaps with another ship.');
+
+  // Vertical
+  expect(() => {
+    gameBoard.placeShip(1, 3, overlappingShipVertical); // Attempt to place another ship at row 2 column 3
   }).toThrow('Ship placement overlaps with another ship.');
 });
