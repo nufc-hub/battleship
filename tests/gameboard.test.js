@@ -49,3 +49,12 @@ test('places a vertical ship on a game board', () => {
   expect(gameBoard.board[1][3]).toBe(0);
   expect(gameBoard.board[3][3]).toBe(0);
 });
+
+// Verify ship is within board boundaries
+
+test('checks if a ship is within game board boundaries', () => {
+  const horizontalShip = new Ship(3, true);
+  const gameBoard = new GameBoard();
+  const result = gameBoard.placeShip(8, 8, horizontalShip);
+  expect(result).toBe(false);
+});
