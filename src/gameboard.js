@@ -10,6 +10,10 @@ class GameBoard {
     if (!this.isValidPlacement(row, col, ship)) {
       throw new Error('Ship placement is out of bounds.');
     }
+    // Throw error if ship is overlapping with another ship
+    if (this.isOverlapping(row, col, ship)) {
+      throw new Error('Ship placement overlaps with another ship.');
+    }
 
     if (ship.isHorizontal) {
       this.placeShipHorizontal(row, col, ship); // Places ship horizontally
@@ -58,6 +62,23 @@ class GameBoard {
       return false;
     }
     return true;
+  }
+
+  // Checks if ship is overlapping with another ship
+  isOverlapping(row, col, ship) {
+    const { length, isHorizontal } = ship;
+    for (let i = 0; i < length; i++) {
+      if (isHorizontal) {
+        // Horizontal placement
+        // Loops through column checking if checking if a ship is already present
+        if (this.board[row - 1][col - 1 + i] === 1) return true;
+      } else {
+        //Vertical placement
+        // Loops through row checking if checking if a ship is already present
+        if (this.board[row - 1 + i][col - 1] === 1) return true;
+      }
+    }
+    return false;
   }
 }
 
