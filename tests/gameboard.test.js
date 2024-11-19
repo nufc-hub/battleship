@@ -79,3 +79,56 @@ test('throws an error for overlapping ship placement', () => {
     gameBoard.placeShip(1, 3, overlappingShipVertical); // Attempt to place another ship at row 2 column 3
   }).toThrow('Ship placement overlaps with another ship.');
 });
+
+// Test attacks
+
+test('Registers a hit on a ship', () => {
+  const horizontalShip = new Ship(3, true);
+  const gameBoard = new GameBoard();
+  gameBoard.placeShip(2, 3, horizontalShip);
+
+  // Attack and hit ship
+  gameBoard.receiveAttack(2, 3, horizontalShip);
+
+  expect(gameBoard.board[1][2]).toBe(-1);
+
+  // Check ship's number of hits property
+  expect(horizontalShip.numberOfHits).toBe(1);
+});
+
+test('Registers a miss on the board', () => {
+  const horizontalShip = new Ship(3, true);
+  const gameBoard = new GameBoard();
+  gameBoard.placeShip(2, 3, horizontalShip);
+
+  // Attack and miss
+  gameBoard.receiveAttack(1, 2);
+
+  expect(gameBoard.board[1][2]).toBe(1); // Attack hit empty coord so value will still be 1
+  expect(gameBoard.board[0][1]).toBe(-2); // Miss is marked as -2 as no ship was there
+});
+
+test('Prevents double counting a hit', () => {
+  const horizontalShip = new Ship(3, true);
+  const gameBoard = new GameBoard();
+  gameBoard.placeShip(2, 3, horizontalShip);
+
+  // Double hit
+  gameBoard.receiveAttack(2, 3);
+  gameBoard.receiveAttack(2, 3);
+
+  expect(horizontalShip.numberOfHits).toBe(1); // Number of hits should remain the same
+});
+
+test('Prevents double counting a miss', () => {
+  const horizontalShip = new Ship(3, true);
+  const gameBoard = new GameBoard();
+  gameBoard.placeShip(2, 3, horizontalShip);
+
+  // Double hit
+  gameBoard.receiveAttack(1, 2);
+
+  expect(() => gameBoard.receiveAttack(1, 2)).toThrow(
+    'This position has already been attacked!'
+  ); // Number of hits should remain the same
+});
