@@ -1,6 +1,11 @@
 class GameBoard {
   // Initialises a 10 x 10 game board with all values set to 0
   constructor() {
+    // Cell with ship - not hit: Value = 1
+    // Cell with ship - hit: Value = -1
+    // Empty cell - not hit: Value = 0
+    // Empty cell - hit: value = -2
+
     this.board = Array.from({ length: 10 }, () => Array(10).fill(0));
   }
 
@@ -10,11 +15,13 @@ class GameBoard {
     if (!this.isValidPlacement(row, col, ship)) {
       throw new Error('Ship placement is out of bounds.');
     }
+
     // Throw error if ship is overlapping with another ship
     if (this.isOverlapping(row, col, ship)) {
       throw new Error('Ship placement overlaps with another ship.');
     }
 
+    // Logic for placing ships
     if (ship.isHorizontal) {
       this.placeShipHorizontal(row, col, ship); // Places ship horizontally
     } else {
@@ -79,6 +86,20 @@ class GameBoard {
       }
     }
     return false;
+  }
+
+  receiveAttack(row, col) {
+    // Attack misses
+    if (this.board[row - 1][col - 1] === 0) {
+      this.receiveMiss(row, col);
+    }
+  }
+
+  // Attack misses
+  receiveMiss(row, col) {
+    if (this.board[row - 1][col - 1] === 0) {
+      this.board[row - 1][col - 1] = -2; // Mark missed shot on the board
+    }
   }
 }
 
