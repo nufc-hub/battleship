@@ -44,6 +44,8 @@ class GameBoard {
     } else {
       this.placeShipVertical(row, col, ship); // Places ship vertically
     }
+
+    this.remainingShips += 1; // Incremement remaining ships when a new ship is placed
   }
 
   placeShipHorizontal(row, col, ship) {
