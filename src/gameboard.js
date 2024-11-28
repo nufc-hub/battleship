@@ -152,11 +152,10 @@ class GameBoard {
       const ship = this.getShip(row, col); // Get the ship at these coordinates
       if (ship) {
         ship.hit(); // Delegate the hit to the ship - will increment ship.numberOfHits
+        this.handleSunkShip(ship); // Check if ship has been sunk
       }
 
       this.board[row - 1][col - 1] = -1; // Mark the hit on the board
-      // if (ship.isSunk()) {
-      // }
     }
   }
 
@@ -166,6 +165,15 @@ class GameBoard {
       this.board[row - 1][col - 1] === -1
     ) {
       throw new Error("'This position has already been attacked!'");
+    }
+  }
+
+  // Check if ship has been sunk
+
+  handleSunkShip(ship) {
+    if (ship.isSunk()) {
+      this.remainingShips -= 1; // Number of ships on board decrements
+      return 'A ship has been sunk';
     }
   }
 }
