@@ -8,6 +8,7 @@ class GameBoard {
     // Initialises a 10 x 10 game board with all values set to 0
     this.board = Array.from({ length: 10 }, () => Array(10).fill(0));
     this.ships = []; //Array to store placed ship and their position
+    this.remainingShips = 0; // Used to track game over
   }
 
   // Get ship at specified coords from this.ships
@@ -150,7 +151,10 @@ class GameBoard {
       if (ship) {
         ship.hit(); // Delegate the hit to the ship - will increment ship.numberOfHits
       }
+
       this.board[row - 1][col - 1] = -1; // Mark the hit on the board
+      // if (ship.isSunk()) {
+      // }
     }
   }
 
