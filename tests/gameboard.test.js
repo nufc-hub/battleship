@@ -137,4 +137,18 @@ test('Prevents double counting a miss', () => {
   expect(gameBoard.board[0][1]).toBe(-2);
 });
 
-// Add test for if ship is sunk
+// Tests if ship has been sunk
+
+test('Remaining ships on board decrement after a ship sinks', () => {
+  const horizontalShip = new Ship(3, true); // Ship of length three
+  const verticalShip = new Ship(3, false);
+  const gameBoard = new GameBoard();
+  gameBoard.placeShip(2, 3, horizontalShip);
+  gameBoard.placeShip(4, 5, verticalShip);
+
+  gameBoard.receiveAttack(2, 3, horizontalShip); // First hit
+  gameBoard.receiveAttack(2, 4, horizontalShip); // Second hit
+  gameBoard.receiveAttack(2, 5, horizontalShip); // Third and final hit
+
+  expect(gameBoard.remainingShips).toBe(1);
+});
