@@ -1,13 +1,29 @@
 class GameBoard {
-  // Initialises a 10 x 10 game board with all values set to 0
-  constructor() {
-    // Cell with ship - not hit: Value = 1
-    // Cell with ship - hit: Value = -1
-    // Empty cell - not hit: Value = 0
-    // Empty cell - hit: value = -2
+  // Cell with ship - not hit: Value = 1
+  // Cell with ship - hit: Value = -1
+  // Empty cell - not hit: Value = 0
+  // Empty cell - hit: value = -2
 
+  constructor() {
+    // Initialises a 10 x 10 game board with all values set to 0
     this.board = Array.from({ length: 10 }, () => Array(10).fill(0));
+    this.ships = []; //Array to store placed ship and their position
   }
+
+  // Get ship at specified coords from this.ships
+
+  getShip(row, col) {
+    // loop through this.ships
+    for (const { ship, positions } of this.ships) {
+      if (positions.some(([r, c]) => r === row - 1 && c === col - 1)) {
+        // Check each position in ships.positions to see if it matches the entered coords
+        return ship; // If ship is found return it
+      }
+    }
+    return null; // No ship found at this position.
+  }
+
+  // Ship placement
 
   // row and col parameters are coordinates
   placeShip(row, col, ship) {
@@ -31,27 +47,37 @@ class GameBoard {
 
   placeShipHorizontal(row, col, ship) {
     const { length, isHorizontal } = ship;
+
+    const shipPositions = [];
+
     // Horizontally
     if (isHorizontal) {
       for (let i = 0; i < length; i++) {
         // When the loop reaches the destination of the coord
         // change the board value from 0 to 1
-        this.board[row - 1][col - 1] = 1;
-        col++;
+        this.board[row - 1][col - 1 + i] = 1;
+        shipPositions.push([row - 1, col - 1 + i]); // Send coords to shipPositions array
       }
+
+      this.ships.push({ ship, positions: shipPositions }); // This is so the board can use the getShips function
     }
   }
 
   placeShipVertical(row, col, ship) {
     const { length, isHorizontal } = ship;
+
+    const shipPositions = [];
+
     // Vertically
     if (!isHorizontal) {
       for (let i = 0; i < length; i++) {
         // When the loop reaches the destination of the coord
         // change the board value from 0 to 1
-        this.board[row - 1][col - 1] = 1;
-        row++;
+        this.board[row - 1 + i][col - 1] = 1;
+        shipPositions.push([row - 1 + i, col - 1]); // Send coords to shipPositions array
       }
+
+      this.ships.push({ ship, positions: shipPositions }); // This is so the board can use the getShips function
     }
   }
 
@@ -88,10 +114,25 @@ class GameBoard {
     return false;
   }
 
+  // Attacks
+
   receiveAttack(row, col) {
+    // Check for double hits
+    if (
+      this.board[row - 1][col - 1] === -2 ||
+      this.board[row - 1][col - 1] === -1
+    ) {
+      this.preventDoubleHit(row, col);
+    }
+
     // Attack misses
     if (this.board[row - 1][col - 1] === 0) {
       this.receiveMiss(row, col);
+    }
+
+    // Attack hits
+    else if (this.board[row - 1][col - 1] === 1) {
+      this.receiveHit(row, col);
     }
   }
 
@@ -99,6 +140,26 @@ class GameBoard {
   receiveMiss(row, col) {
     if (this.board[row - 1][col - 1] === 0) {
       this.board[row - 1][col - 1] = -2; // Mark missed shot on the board
+    }
+  }
+
+  // Attack hits
+  receiveHit(row, col) {
+    if (this.board[row - 1][col - 1] === 1) {
+      const ship = this.getShip(row, col); // Get the ship at these coordinates
+      if (ship) {
+        ship.hit(); // Delegate the hit to the ship - will increment ship.numberOfHits
+      }
+      this.board[row - 1][col - 1] = -1; // Mark the hit on the board
+    }
+  }
+
+  preventDoubleHit(row, col) {
+    if (
+      this.board[row - 1][col - 1] === -2 ||
+      this.board[row - 1][col - 1] === -1
+    ) {
+      throw new Error("'This position has already been attacked!'");
     }
   }
 }
