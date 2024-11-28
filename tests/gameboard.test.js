@@ -115,9 +115,12 @@ test('Prevents double counting a hit', () => {
 
   // Double hit
   gameBoard.receiveAttack(2, 3);
-  gameBoard.receiveAttack(2, 3);
 
+  expect(() => gameBoard.receiveAttack(2, 3)).toThrow(
+    'This position has already been attacked!' // Attack hit ship again
+  );
   expect(horizontalShip.numberOfHits).toBe(1); // Number of hits should remain the same
+  expect(gameBoard.board[1][2]).toBe(-1); // Attack hit empty coord so value will still be 1
 });
 
 test('Prevents double counting a miss', () => {
@@ -126,9 +129,12 @@ test('Prevents double counting a miss', () => {
   gameBoard.placeShip(2, 3, horizontalShip);
 
   // Double hit
-  gameBoard.receiveAttack(1, 2);
+  gameBoard.receiveAttack(1, 2); // Attack hit empty coord
 
   expect(() => gameBoard.receiveAttack(1, 2)).toThrow(
-    'This position has already been attacked!'
-  ); // Number of hits should remain the same
+    'This position has already been attacked!' // Attack hit empty coord again
+  );
+  expect(gameBoard.board[0][1]).toBe(-2);
 });
+
+// Add test for if ship is sunk
