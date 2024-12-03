@@ -173,6 +173,12 @@ class GameBoard {
     return { cell, ship };
   }
 
+  // Checks if already attacked
+
+  isAlreadyAttacked(cell) {
+    return cell === -1 || cell === -2;
+  }
+
   // Checks a miss
   isMiss(cell) {
     return cell === 0;
