@@ -197,8 +197,6 @@ class GameBoard {
         remainingShips: this.remainingShips,
       };
     }
-    // If a ship has not been sunk
-    return null;
   }
 
   // Check if all ships have been sunk
