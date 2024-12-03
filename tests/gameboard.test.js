@@ -157,7 +157,7 @@ test('Remaining ships on board decrement after a ship sinks', () => {
   expect(gameBoard.remainingShips).toBe(1);
 });
 
-test('handle sunkShip should return a game over message if all ships sunk and decrement remainingShips', () => {
+test('return a game over message if all ships sunk and decrement remainingShips', () => {
   const horizontalShip = new Ship(3, true); // Ship of length three
   const verticalShip = new Ship(3, false);
   const gameBoard = new GameBoard();
