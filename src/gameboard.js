@@ -28,6 +28,9 @@ class GameBoard {
 
   // row and col parameters are coordinates
   placeShip(row, col, ship) {
+    // Validate the starting coords
+    this.validateCoordinates(row, col);
+
     // Throw error if ship is placed off the board
     if (!this.isValidPlacement(row, col, ship)) {
       throw new Error('Ship placement is out of bounds.');
@@ -120,6 +123,9 @@ class GameBoard {
   // Attacks
 
   receiveAttack(row, col) {
+    // Make sure attack coords are within game board bounds
+    this.validateCoordinates(row, col);
+
     const cell = this.board[row - 1][col - 1];
 
     switch (cell) {
@@ -170,6 +176,13 @@ class GameBoard {
       this.board[row - 1][col - 1] === -1
     ) {
       throw new Error("'This position has already been attacked!'");
+    }
+  }
+
+  // Check if coords exist on the board - used for things such as when player puts coords in for an attack
+  validateCoordinates(row, col) {
+    if (row < 1 || row > 10 || col < 1 || col > 10) {
+      throw new Error('Row and column must be between 1 and 10.');
     }
   }
 
