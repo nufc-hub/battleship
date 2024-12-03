@@ -173,8 +173,14 @@ class GameBoard {
     return { cell, ship };
   }
 
+  // Checks a miss
   isMiss(cell) {
     return cell === 0;
+  }
+
+  // Checks a hit
+  isHit(cell) {
+    return cell === 1;
   }
 
   // Attack misses
