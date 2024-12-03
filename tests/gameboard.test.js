@@ -82,7 +82,7 @@ test('throws an error for overlapping ship placement', () => {
 
 // Test attacks
 
-test('Registers a hit on a ship', () => {
+test('registers a hit on a ship', () => {
   const horizontalShip = new Ship(3, true);
   const gameBoard = new GameBoard();
   gameBoard.placeShip(2, 3, horizontalShip);
@@ -96,7 +96,7 @@ test('Registers a hit on a ship', () => {
   expect(horizontalShip.numberOfHits).toBe(1);
 });
 
-test('Registers a miss on the board', () => {
+test('registers a miss on the board', () => {
   const horizontalShip = new Ship(3, true);
   const gameBoard = new GameBoard();
   gameBoard.placeShip(2, 3, horizontalShip);
@@ -108,7 +108,7 @@ test('Registers a miss on the board', () => {
   expect(gameBoard.board[0][1]).toBe(-2); // Miss is marked as -2 as no ship was there
 });
 
-test('Prevents double counting a hit', () => {
+test('prevents double counting a hit', () => {
   const horizontalShip = new Ship(3, true);
   const gameBoard = new GameBoard();
   gameBoard.placeShip(2, 3, horizontalShip);
@@ -125,7 +125,7 @@ test('Prevents double counting a hit', () => {
   expect(gameBoard.board[1][2]).toBe(-1); // Attack hit empty coord so value will still be 1
 });
 
-test('Prevents double counting a miss', () => {
+test('prevents double counting a miss', () => {
   const horizontalShip = new Ship(3, true);
   const gameBoard = new GameBoard();
   gameBoard.placeShip(2, 3, horizontalShip);
@@ -143,7 +143,7 @@ test('Prevents double counting a miss', () => {
 
 // Tests if ship has been sunk
 
-test('Remaining ships on board decrement after a ship sinks', () => {
+test('return a ship sunk message if a ship is sunk and decrement remainingShips', () => {
   const horizontalShip = new Ship(3, true); // Ship of length three
   const verticalShip = new Ship(3, false);
   const gameBoard = new GameBoard();
@@ -152,11 +152,16 @@ test('Remaining ships on board decrement after a ship sinks', () => {
 
   gameBoard.receiveAttack(2, 3, horizontalShip); // First hit
   gameBoard.receiveAttack(2, 4, horizontalShip); // Second hit
-  gameBoard.receiveAttack(2, 5, horizontalShip); // Third and final hit
+  // Third and final hit
+  expect(gameBoard.receiveAttack(2, 5, horizontalShip)).toEqual({
+    message: 'A ship has been sunk',
+    remainingShips: gameBoard.remainingShips,
+  });
 
   expect(gameBoard.remainingShips).toBe(1);
 });
 
+// Test if a game is over
 test('return a game over message if all ships sunk and decrement remainingShips', () => {
   const horizontalShip = new Ship(3, true); // Ship of length three
   const verticalShip = new Ship(3, false);
