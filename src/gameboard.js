@@ -132,36 +132,23 @@ class GameBoard {
   // Attacks
 
   receiveAttack(row, col) {
-    const rowIndex = row - 1;
-    const colIndex = col - 1;
-    const ship = this.getShip(row, col); // Get the ship at these coordinates
+    // Get the ship and cell info
+    const { cell, ship } = this.getCellInfo(row, col);
 
     // Make sure attack coords are within game board bounds
     this.validateCoordinates(row, col);
 
-    const cell = this.board[rowIndex][colIndex];
+    // Cell has already been hit
+    if (this.isAlreadyAttacked(cell)) {
+      this.handleAlreadyAttacked();
+    }
 
-    switch (cell) {
-      // Check for double hits
-      case -2:
-      case -1:
-        this.preventDoubleHit(row, col);
-        break;
+    if (this.isMiss(cell)) {
+      this.handleMiss(row, col);
+    }
 
-      // Attack misses
-      case 0:
-        this.receiveMiss(row, col);
-        break;
-
-      // Attack hits
-      case 1:
-        this.receiveHit(row, col, ship);
-        this.handleSunkShip(ship); // Check if ship has been sunk/ game over conditions
-        this.isGameOver(); // Check game over
-        break;
-
-      default:
-        throw new Error('Invalid cell state.');
+    if (this.isHit(cell)) {
+      this.handleHit(row, col, ship);
     }
   }
 
@@ -222,7 +209,7 @@ class GameBoard {
 
     // Ship is sunk
     if (ship && ship.isSunk()) {
-      return this.handleSunkShip(ship);
+      return this.handleSunkShip();
     }
     // Message if ship not yet sunk
     return { message: 'Hit!', remainingShips: this.remainingShips };
