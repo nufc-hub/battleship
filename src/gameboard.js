@@ -194,11 +194,12 @@ class GameBoard {
   }
 
   // Attack misses
-  receiveMiss(row, col) {
+  handleMiss(row, col) {
     const rowIndex = row - 1;
     const colIndex = col - 1;
 
     this.board[rowIndex][colIndex] = -2; // Mark missed shot on the board
+    return { message: 'Miss!', remainingShips: this.remainingShips };
   }
 
   // Attack hits
