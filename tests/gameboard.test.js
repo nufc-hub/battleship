@@ -116,8 +116,10 @@ test('Prevents double counting a hit', () => {
   // Double hit
   gameBoard.receiveAttack(2, 3);
 
-  expect(() => gameBoard.receiveAttack(2, 3)).toThrow(
-    'This position has already been attacked!' // Attack hit ship again
+  expect(gameBoard.receiveAttack(2, 3)).toEqual(
+    {
+      message: 'This position has already been attacked!',
+    } // Attack hit ship again
   );
   expect(horizontalShip.numberOfHits).toBe(1); // Number of hits should remain the same
   expect(gameBoard.board[1][2]).toBe(-1); // Attack hit empty coord so value will still be 1
@@ -128,11 +130,13 @@ test('Prevents double counting a miss', () => {
   const gameBoard = new GameBoard();
   gameBoard.placeShip(2, 3, horizontalShip);
 
-  // Double hit
+  // Double miss
   gameBoard.receiveAttack(1, 2); // Attack hit empty coord
 
-  expect(() => gameBoard.receiveAttack(1, 2)).toThrow(
-    'This position has already been attacked!' // Attack hit empty coord again
+  expect(gameBoard.receiveAttack(1, 2)).toEqual(
+    {
+      message: 'This position has already been attacked!',
+    } // Attack hit empty coord again
   );
   expect(gameBoard.board[0][1]).toBe(-2);
 });
@@ -151,4 +155,32 @@ test('Remaining ships on board decrement after a ship sinks', () => {
   gameBoard.receiveAttack(2, 5, horizontalShip); // Third and final hit
 
   expect(gameBoard.remainingShips).toBe(1);
+});
+
+test('handle sunkShip should return a game over message if all ships sunk and decrement remainingShips', () => {
+  const horizontalShip = new Ship(3, true); // Ship of length three
+  const verticalShip = new Ship(3, false);
+  const gameBoard = new GameBoard();
+
+  // Remaining ships will be 2
+  gameBoard.placeShip(2, 3, horizontalShip);
+  gameBoard.placeShip(4, 5, verticalShip);
+
+  // Sink first ship
+  // Remaining ships will be 1
+  gameBoard.receiveAttack(2, 3); // First hit
+  gameBoard.receiveAttack(2, 4); // Second hit
+  gameBoard.receiveAttack(2, 5); // Third and final hit
+
+  // Sink second ship
+  gameBoard.receiveAttack(4, 5); // First hit
+  gameBoard.receiveAttack(5, 5); // Second hit
+
+  // Third and final hit
+  expect(gameBoard.receiveAttack(6, 5)).toEqual({
+    message: 'Game over! All ships have been sunk!',
+    remainingShips: 0,
+  });
+
+  expect(gameBoard.remainingShips).toBe(0);
 });
