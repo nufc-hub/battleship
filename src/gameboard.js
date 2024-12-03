@@ -134,6 +134,7 @@ class GameBoard {
   receiveAttack(row, col) {
     const rowIndex = row - 1;
     const colIndex = col - 1;
+    const ship = this.getShip(row, col); // Get the ship at these coordinates
 
     // Make sure attack coords are within game board bounds
     this.validateCoordinates(row, col);
@@ -154,12 +155,26 @@ class GameBoard {
 
       // Attack hits
       case 1:
-        this.receiveHit(row, col);
+        this.receiveHit(row, col, ship);
+        this.handleSunkShip(ship); // Check if ship has been sunk/ game over conditions
+        this.isGameOver(); // Check game over
         break;
 
       default:
         throw new Error('Invalid cell state.');
     }
+  }
+
+  getCellInfo(row, col) {
+    const rowIndex = row - 1;
+    const colIndex = col - 1;
+    const cell = this.board[rowIndex][colIndex];
+    const ship = this.getShip(row, col);
+    return { cell, ship };
+  }
+
+  isMiss(cell) {
+    return cell === 0;
   }
 
   // Attack misses
@@ -171,14 +186,12 @@ class GameBoard {
   }
 
   // Attack hits
-  receiveHit(row, col) {
+  receiveHit(row, col, ship) {
     const rowIndex = row - 1;
     const colIndex = col - 1;
-    const ship = this.getShip(row, col); // Get the ship at these coordinates
 
     if (ship) {
       ship.hit(); // Delegate the hit to the ship - will increment ship.numberOfHits
-      this.handleSunkShip(ship); // Check if ship has been sunk
     }
 
     this.board[rowIndex][colIndex] = -1; // Mark the hit on the board
@@ -201,15 +214,6 @@ class GameBoard {
     if (ship.isSunk()) {
       this.remainingShips -= 1; // Number of ships on board decrements
 
-      // Check if all ships have been sunk
-
-      if (this.areAllShipsSunk()) {
-        return {
-          message: 'Game over! All ships have been sunk!',
-          remainingShips: 0,
-        };
-      }
-
       return {
         message: 'A ship has been sunk',
         remainingShips: this.remainingShips,
@@ -221,6 +225,17 @@ class GameBoard {
 
   areAllShipsSunk() {
     return this.remainingShips === 0;
+  }
+
+  // Check game over
+
+  isGameOver() {
+    if (this.areAllShipsSunk) {
+      return {
+        message: 'Game over! All ships have been sunk!',
+        remainingShips: this.remainingShips,
+      };
+    }
   }
 }
 
