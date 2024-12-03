@@ -173,8 +173,29 @@ class GameBoard {
   handleSunkShip(ship) {
     if (ship.isSunk()) {
       this.remainingShips -= 1; // Number of ships on board decrements
-      return 'A ship has been sunk';
+
+      // Check if all ships have been sunk
+
+      if (this.areAllShipsSunk()) {
+        return {
+          message: 'Game over! All ships have been sunk!',
+          remainingShips: 0,
+        };
+      }
+
+      return {
+        message: 'A ship has been sunk',
+        remainingShips: this.remainingShips,
+      };
     }
+    // If a ship has not been sunk
+    return null;
+  }
+
+  // Check if all ships have been sunk
+
+  areAllShipsSunk() {
+    return this.remainingShips === 0;
   }
 }
 
