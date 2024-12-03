@@ -152,31 +152,22 @@ class GameBoard {
 
   // Attack misses
   receiveMiss(row, col) {
-    if (this.board[row - 1][col - 1] === 0) {
-      this.board[row - 1][col - 1] = -2; // Mark missed shot on the board
-    }
+    this.board[row - 1][col - 1] = -2; // Mark missed shot on the board
   }
 
   // Attack hits
   receiveHit(row, col) {
-    if (this.board[row - 1][col - 1] === 1) {
-      const ship = this.getShip(row, col); // Get the ship at these coordinates
-      if (ship) {
-        ship.hit(); // Delegate the hit to the ship - will increment ship.numberOfHits
-        this.handleSunkShip(ship); // Check if ship has been sunk
-      }
-
-      this.board[row - 1][col - 1] = -1; // Mark the hit on the board
+    const ship = this.getShip(row, col); // Get the ship at these coordinates
+    if (ship) {
+      ship.hit(); // Delegate the hit to the ship - will increment ship.numberOfHits
+      this.handleSunkShip(ship); // Check if ship has been sunk
     }
+
+    this.board[row - 1][col - 1] = -1; // Mark the hit on the board
   }
 
-  preventDoubleHit(row, col) {
-    if (
-      this.board[row - 1][col - 1] === -2 ||
-      this.board[row - 1][col - 1] === -1
-    ) {
-      throw new Error("'This position has already been attacked!'");
-    }
+  preventDoubleHit() {
+    throw new Error("'This position has already been attacked!'");
   }
 
   // Check if coords exist on the board - used for things such as when player puts coords in for an attack
