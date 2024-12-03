@@ -257,17 +257,6 @@ class GameBoard {
   areAllShipsSunk() {
     return this.remainingShips === 0;
   }
-
-  // Check game over
-
-  isGameOver() {
-    if (this.areAllShipsSunk) {
-      return {
-        message: 'Game over! All ships have been sunk!',
-        remainingShips: this.remainingShips,
-      };
-    }
-  }
 }
 
 export default GameBoard;
