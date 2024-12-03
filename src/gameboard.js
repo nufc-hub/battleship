@@ -143,13 +143,17 @@ class GameBoard {
       this.handleAlreadyAttacked();
     }
 
+    // Attack misses
     if (this.isMiss(cell)) {
       this.handleMiss(row, col);
     }
 
+    // Attack hits
     if (this.isHit(cell)) {
       this.handleHit(row, col, ship);
     }
+
+    throw new Error('Invalid cell state.');
   }
 
   // Check if coords exist on the board - used for things such as when player puts coords in for an attack
