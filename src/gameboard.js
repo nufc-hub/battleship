@@ -228,7 +228,7 @@ class GameBoard {
     if (this.areAllShipsSunk()) {
       return {
         message: 'Game over! All ships have been sunk!',
-        remainingShips: this.remainingShips,
+        remainingShips: 0,
       };
     }
 
