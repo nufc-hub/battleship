@@ -14,9 +14,11 @@ class GameBoard {
   // Get ship at specified coords from this.ships
 
   getShip(row, col) {
+    const rowIndex = row - 1;
+    const colIndex = col - 1;
     // loop through this.ships
     for (const { ship, positions } of this.ships) {
-      if (positions.some(([r, c]) => r === row - 1 && c === col - 1)) {
+      if (positions.some(([r, c]) => r === rowIndex && c === colIndex)) {
         // Check each position in ships.positions to see if it matches the entered coords
         return ship; // If ship is found return it
       }
@@ -53,7 +55,8 @@ class GameBoard {
 
   placeShipHorizontal(row, col, ship) {
     const { length, isHorizontal } = ship;
-
+    const rowIndex = row - 1;
+    const colIndex = col - 1;
     const shipPositions = [];
 
     // Horizontally
@@ -61,8 +64,8 @@ class GameBoard {
       for (let i = 0; i < length; i++) {
         // When the loop reaches the destination of the coord
         // change the board value from 0 to 1
-        this.board[row - 1][col - 1 + i] = 1;
-        shipPositions.push([row - 1, col - 1 + i]); // Send coords to shipPositions array
+        this.board[rowIndex][colIndex + i] = 1;
+        shipPositions.push([rowIndex, colIndex + i]); // Send coords to shipPositions array
       }
 
       this.ships.push({ ship, positions: shipPositions }); // This is so the board can use the getShips function
@@ -71,7 +74,8 @@ class GameBoard {
 
   placeShipVertical(row, col, ship) {
     const { length, isHorizontal } = ship;
-
+    const rowIndex = row - 1;
+    const colIndex = col - 1;
     const shipPositions = [];
 
     // Vertically
@@ -79,8 +83,8 @@ class GameBoard {
       for (let i = 0; i < length; i++) {
         // When the loop reaches the destination of the coord
         // change the board value from 0 to 1
-        this.board[row - 1 + i][col - 1] = 1;
-        shipPositions.push([row - 1 + i, col - 1]); // Send coords to shipPositions array
+        this.board[rowIndex + i][colIndex] = 1;
+        shipPositions.push([rowIndex + i, colIndex]); // Send coords to shipPositions array
       }
 
       this.ships.push({ ship, positions: shipPositions }); // This is so the board can use the getShips function
@@ -90,14 +94,16 @@ class GameBoard {
   // Checks ship is being placed within boundaries of board
   isValidPlacement(row, col, ship) {
     const { length, isHorizontal } = ship;
+    const rowIndex = row - 1;
+    const colIndex = col - 1;
 
     // Check horizontal placement
-    if (isHorizontal && col - 1 + length > this.board.length) {
+    if (isHorizontal && colIndex + length > this.board.length) {
       return false;
     }
 
     // Check vertical placement
-    if (!isHorizontal && row - 1 + length > this.board.length) {
+    if (!isHorizontal && rowIndex + length > this.board.length) {
       return false;
     }
     return true;
@@ -106,15 +112,18 @@ class GameBoard {
   // Checks if ship is overlapping with another ship
   isOverlapping(row, col, ship) {
     const { length, isHorizontal } = ship;
+    const rowIndex = row - 1;
+    const colIndex = col - 1;
+
     for (let i = 0; i < length; i++) {
       if (isHorizontal) {
         // Horizontal placement
         // Loops through column checking if checking if a ship is already present
-        if (this.board[row - 1][col - 1 + i] === 1) return true;
+        if (this.board[rowIndex][colIndex + i] === 1) return true;
       } else {
         //Vertical placement
         // Loops through row checking if checking if a ship is already present
-        if (this.board[row - 1 + i][col - 1] === 1) return true;
+        if (this.board[rowIndex + i][colIndex] === 1) return true;
       }
     }
     return false;
@@ -123,10 +132,13 @@ class GameBoard {
   // Attacks
 
   receiveAttack(row, col) {
+    const rowIndex = row - 1;
+    const colIndex = col - 1;
+
     // Make sure attack coords are within game board bounds
     this.validateCoordinates(row, col);
 
-    const cell = this.board[row - 1][col - 1];
+    const cell = this.board[rowIndex][colIndex];
 
     switch (cell) {
       // Check for double hits
@@ -152,18 +164,24 @@ class GameBoard {
 
   // Attack misses
   receiveMiss(row, col) {
-    this.board[row - 1][col - 1] = -2; // Mark missed shot on the board
+    const rowIndex = row - 1;
+    const colIndex = col - 1;
+
+    this.board[rowIndex][colIndex] = -2; // Mark missed shot on the board
   }
 
   // Attack hits
   receiveHit(row, col) {
+    const rowIndex = row - 1;
+    const colIndex = col - 1;
     const ship = this.getShip(row, col); // Get the ship at these coordinates
+
     if (ship) {
       ship.hit(); // Delegate the hit to the ship - will increment ship.numberOfHits
       this.handleSunkShip(ship); // Check if ship has been sunk
     }
 
-    this.board[row - 1][col - 1] = -1; // Mark the hit on the board
+    this.board[rowIndex][colIndex] = -1; // Mark the hit on the board
   }
 
   preventDoubleHit() {
