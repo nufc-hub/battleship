@@ -189,6 +189,10 @@ class GameBoard {
     return cell === 1;
   }
 
+  handleAlreadyAttacked() {
+    return { message: 'This position has already been attacked!' };
+  }
+
   // Attack misses
   receiveMiss(row, col) {
     const rowIndex = row - 1;
