@@ -120,22 +120,27 @@ class GameBoard {
   // Attacks
 
   receiveAttack(row, col) {
-    // Check for double hits
-    if (
-      this.board[row - 1][col - 1] === -2 ||
-      this.board[row - 1][col - 1] === -1
-    ) {
-      this.preventDoubleHit(row, col);
-    }
+    const cell = this.board[row - 1][col - 1];
 
-    // Attack misses
-    if (this.board[row - 1][col - 1] === 0) {
-      this.receiveMiss(row, col);
-    }
+    switch (cell) {
+      // Check for double hits
+      case -2:
+      case -1:
+        this.preventDoubleHit(row, col);
+        break;
 
-    // Attack hits
-    else if (this.board[row - 1][col - 1] === 1) {
-      this.receiveHit(row, col);
+      // Attack misses
+      case 0:
+        this.receiveMiss(row, col);
+        break;
+
+      // Attack hits
+      case 1:
+        this.receiveHit(row, col);
+        break;
+
+      default:
+        throw new Error('Invalid cell state.');
     }
   }
 
