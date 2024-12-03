@@ -219,10 +219,6 @@ class GameBoard {
     return { message: 'Hit!', remainingShips: this.remainingShips };
   }
 
-  preventDoubleHit() {
-    throw new Error("'This position has already been attacked!'");
-  }
-
   // Check if ship has been sunk
 
   handleSunkShip() {
