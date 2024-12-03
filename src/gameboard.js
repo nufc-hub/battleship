@@ -140,17 +140,17 @@ class GameBoard {
 
     // Cell has already been hit
     if (this.isAlreadyAttacked(cell)) {
-      this.handleAlreadyAttacked();
+      return this.handleAlreadyAttacked();
     }
 
     // Attack misses
     if (this.isMiss(cell)) {
-      this.handleMiss(row, col);
+      return this.handleMiss(row, col);
     }
 
     // Attack hits
     if (this.isHit(cell)) {
-      this.handleHit(row, col, ship);
+      return this.handleHit(row, col, ship);
     }
 
     throw new Error('Invalid cell state.');
