@@ -203,15 +203,22 @@ class GameBoard {
   }
 
   // Attack hits
-  receiveHit(row, col, ship) {
+  handleHit(row, col, ship) {
     const rowIndex = row - 1;
     const colIndex = col - 1;
+
+    this.board[rowIndex][colIndex] = -1; // Mark the hit on the board
 
     if (ship) {
       ship.hit(); // Delegate the hit to the ship - will increment ship.numberOfHits
     }
 
-    this.board[rowIndex][colIndex] = -1; // Mark the hit on the board
+    // Ship is sunk
+    if (ship && ship.isSunk()) {
+      return this.handleSunkShip(ship);
+    }
+    // Message if ship not yet sunk
+    return { message: 'Hit!', remainingShips: this.remainingShips };
   }
 
   preventDoubleHit() {
