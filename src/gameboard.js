@@ -165,6 +165,13 @@ class GameBoard {
     }
   }
 
+  // Check if coords exist on the board - used for things such as when player puts coords in for an attack
+  validateCoordinates(row, col) {
+    if (row < 1 || row > 10 || col < 1 || col > 10) {
+      throw new Error('Row and column must be between 1 and 10.');
+    }
+  }
+
   getCellInfo(row, col) {
     const rowIndex = row - 1;
     const colIndex = col - 1;
@@ -225,24 +232,24 @@ class GameBoard {
     throw new Error("'This position has already been attacked!'");
   }
 
-  // Check if coords exist on the board - used for things such as when player puts coords in for an attack
-  validateCoordinates(row, col) {
-    if (row < 1 || row > 10 || col < 1 || col > 10) {
-      throw new Error('Row and column must be between 1 and 10.');
-    }
-  }
-
   // Check if ship has been sunk
 
-  handleSunkShip(ship) {
-    if (ship.isSunk()) {
-      this.remainingShips -= 1; // Number of ships on board decrements
+  handleSunkShip() {
+    this.remainingShips -= 1; // Number of ships on board decrements
 
+    // Game over
+    if (this.areAllShipsSunk()) {
       return {
-        message: 'A ship has been sunk',
+        message: 'Game over! All ships have been sunk!',
         remainingShips: this.remainingShips,
       };
     }
+
+    // Ship sunk but not game over
+    return {
+      message: 'A ship has been sunk',
+      remainingShips: this.remainingShips,
+    };
   }
 
   // Check if all ships have been sunk
