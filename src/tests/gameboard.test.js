@@ -1,5 +1,5 @@
-import GameBoard from '../src/gameboard';
-import Ship from '../src/ship';
+import GameBoard from '../modules/gameboard';
+import Ship from '../modules/ship';
 
 // Test the game board's length
 

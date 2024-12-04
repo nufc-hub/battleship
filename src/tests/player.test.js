@@ -1,5 +1,5 @@
-import Player from '../src/player';
-import GameBoard from '../src/gameboard';
+import Player from '../modules/player';
+import GameBoard from '../modules/gameboard';
 
 // Real player initialisation
 
