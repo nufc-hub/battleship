@@ -13,9 +13,14 @@ class GameController {
     this.humanPlayer = null;
     this.computerPlayer = null;
   }
-
+  // Create gameboard instance
   createGameboard() {
     return new Gameboard();
+  }
+
+  //Create a human player with its own gameboard
+  createHumanPlayer(gameboard) {
+    this.humanPlayer = new Player(true, gameboard);
   }
 }
 
