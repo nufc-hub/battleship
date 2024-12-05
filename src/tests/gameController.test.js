@@ -22,13 +22,13 @@ test('createHumanPlayer initializes a human player with a gameboard', () => {
 });
 
 // Test computer player setup
-test('createHumanPlayer initializes a human player with a gameboard', () => {
+test('createComputerPlayer initializes a computer player with a gameboard', () => {
   const mockGameboard = { board: [], remainingShips: 0, ships: [] }; // Mocked version of gameboard
   const gameController = new GameController();
-  gameController.createHumanPlayer(mockGameboard);
+  gameController.createComputerPlayer(mockGameboard);
 
-  expect(gameController.humanPlayer).toEqual({
-    isHuman: true,
+  expect(gameController.computerPlayer).toEqual({
+    isHuman: false,
     gameBoard: mockGameboard,
   });
 });
