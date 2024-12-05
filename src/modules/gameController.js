@@ -13,6 +13,10 @@ class GameController {
     this.humanPlayer = null;
     this.computerPlayer = null;
   }
+
+  createGameboard() {
+    return new Gameboard();
+  }
 }
 
 export default GameController;
