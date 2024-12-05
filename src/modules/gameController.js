@@ -22,6 +22,16 @@ class GameController {
   createHumanPlayer(gameboard) {
     this.humanPlayer = new Player(true, gameboard);
   }
-}
 
+  //Create a computer player with its own gameboard
+  createComputerPlayer(gameboard) {
+    this.computerPlayer = new Player(false, gameboard);
+  }
+}
+// Create ships
+// Create board
+// Create human and computer players
+// Add ships to the gamebaord
+// Add ability for both players to attack
+// Add ability to restart game at anypoint and when game is over
 export default GameController;
