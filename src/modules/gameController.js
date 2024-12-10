@@ -1,6 +1,6 @@
 // import Ship from '../modules/ship';
-import Gameboard from '../modules/gameboard';
-import Player from '../modules/player';
+import Gameboard from '../modules/gameboard.js';
+import Player from '../modules/player.js';
 
 // To place a ship:
 // const humanPlayerGameboard = this.humanplayer.gameboard
@@ -13,6 +13,13 @@ class GameController {
     this.humanPlayer = null;
     this.computerPlayer = null;
   }
+
+  initGameController() {
+    const gameboard = this.createGameboard();
+    this.createHumanPlayer(gameboard);
+    this.createComputerPlayer(gameboard);
+  }
+
   // Create gameboard instance
   createGameboard() {
     return new Gameboard();
@@ -29,8 +36,6 @@ class GameController {
   }
 }
 // Create ships
-// Create board
-// Create human and computer players
 // Add ships to the gamebaord
 // Add ability for both players to attack
 // Add ability to restart game at anypoint and when game is over
