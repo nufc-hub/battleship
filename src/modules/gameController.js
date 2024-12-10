@@ -34,6 +34,11 @@ class GameController {
   createComputerPlayer(gameboard) {
     this.computerPlayer = new Player(false, gameboard);
   }
+
+  // Used by the DOM module when handling a cell click - changes boards' state depending on hit/ miss
+  processAttack(row, col) {
+    return this.computerPlayer.gameBoard.receiveAttack(row, col); // Change the value in the players gameboard (array)
+  }
 }
 // Create ships
 // Add ships to the gamebaord
