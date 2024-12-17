@@ -1,41 +1,51 @@
 class DomManager {
-  constructor(gameController) {
+  constructor(gameController, boardRenderer, eventManager) {
     this.gameController = gameController;
+    this.boardRenderer = boardRenderer;
+    this.eventManager = eventManager;
   }
 
-  renderHumanGameboard() {
-    this.renderGameboard(this.getHumanGameboard(), 'human-board');
+  renderGame(humanBoardDivId, computerBoardDivId) {
+    this.renderHumanGameBoard(humanBoardDivId);
+    this.renderComputerGameBoard(computerBoardDivId);
+    this.attachEvents(computerBoardDivId);
   }
 
-  renderComputerGameboard() {
-    this.renderGameboard(this.getComputerGameboard(), 'computer-board');
+  renderHumanGameBoard(humanBoardDivId) {
+    this.boardRenderer.renderBoard(this.getHumanGameBoard(), humanBoardDivId);
   }
 
-  renderGameboard(gameboard, boardDivId) {
-    // Loop through gameboard rendering it to webpage
-    gameboard.forEach((row) => {
-      row.forEach((col) => {
-        const humanBoardDiv = document.getElementById(boardDivId);
-        const cell = document.createElement('div');
-        cell.classList = 'board-cell';
-        cell.dataset.value = col; // Placeholder.Change this later to represent the ship there.
-
-        // Append each cell to the board
-        humanBoardDiv.appendChild(cell);
-      });
-    });
+  renderComputerGameBoard(computerBoardDivId) {
+    this.boardRenderer.renderBoard(
+      this.getComputerGameBoard(),
+      computerBoardDivId
+    );
   }
 
-  // Get gameboards from players initialised in gameController
+  attachEvents(ComputerBoardDivId) {
+    this.eventManager.addAttackListeners(
+      ComputerBoardDivId,
+      (gameBoard, cell, row, col) => {
+        this.boardRenderer.setCellColor(gameBoard, cell, row, col);
+      }
+    );
+  }
 
-  getHumanGameboard() {
+  // Get game boards from players initialised in gameController
+  getHumanGameBoard() {
     const gameBoard = this.gameController.humanPlayer.gameBoard;
-    return gameBoard.board;
+    return gameBoard.board; // Return the board array
   }
 
-  getComputerGameboard() {
+  getComputerGameBoard() {
     const gameBoard = this.gameController.computerPlayer.gameBoard;
-    return gameBoard.board;
+    return gameBoard.board; // Return the board array
+  }
+
+  // Used when re-rendering the board after a change in game board state
+  clearBoard(boardDivId) {
+    const boardDiv = document.getElementById(boardDivId);
+    boardDiv.replaceChildren(); // Delete cells in game board
   }
 }
 
