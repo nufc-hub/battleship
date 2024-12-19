@@ -15,9 +15,10 @@ class GameController {
   }
 
   initGameController() {
-    const gameBoard = this.createGameBoard();
-    this.createHumanPlayer(gameBoard);
-    this.createComputerPlayer(gameBoard);
+    const humanGameBoard = this.createGameBoard();
+    const computerGameBoard = this.createGameBoard();
+    this.createHumanPlayer(humanGameBoard);
+    this.createComputerPlayer(computerGameBoard);
   }
 
   // Create gameBoard instance
@@ -41,8 +42,9 @@ class GameController {
   }
 
   processComputerAttack() {
-    // Add the callback function here
-    // Execute the makeComputerAttack method in Player module
+    return this.computerPlayer.makeComputerAttack((row, col) => {
+      return this.humanPlayer.gameBoard.receiveAttack(row, col);
+    });
   }
 }
 // Create ships
