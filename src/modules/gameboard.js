@@ -11,7 +11,7 @@ class GameBoard {
     this.remainingShips = 0; // Used to track game over
   }
 
-  // Get ship at specified coords from this.ships
+  // Get ship at specified  coords from this.ships
 
   getShip(row, col) {
     const rowIndex = row - 1;
@@ -158,15 +158,14 @@ class GameBoard {
 
   // Check if coords exist on the board - used for things such as when player puts coords in for an attack
   validateCoordinates(row, col) {
-    if (row < 1 || row > 10 || col < 1 || col > 10) {
-      throw new Error('Row and column must be between 1 and 10.');
+    if (row < 0 || row > 9 || col < 0 || col > 9) {
+      // 0 based indexing
+      throw new Error('Row and column must be between 0 and 9.'); // Mesaage for user
     }
   }
 
   getCellInfo(row, col) {
-    const rowIndex = row - 1;
-    const colIndex = col - 1;
-    const cell = this.board[rowIndex][colIndex];
+    const cell = this.board[row][col];
     const ship = this.getShip(row, col);
     return { cell, ship };
   }
@@ -193,22 +192,20 @@ class GameBoard {
 
   // Attack misses
   handleMiss(row, col) {
-    const rowIndex = row - 1;
-    const colIndex = col - 1;
-
-    this.board[rowIndex][colIndex] = -2; // Mark missed shot on the board
-    return { message: 'Miss!', remainingShips: this.remainingShips };
+    this.board[row][col] = -2; // Mark missed shot on the board
+    return {
+      message: 'Miss!',
+      remainingShips: this.remainingShips,
+      cellState: -2,
+    };
   }
 
   // Attack hits
   handleHit(row, col, ship) {
-    const rowIndex = row - 1;
-    const colIndex = col - 1;
-
-    this.board[rowIndex][colIndex] = -1; // Mark the hit on the board
+    this.board[row][col] = -1; // Mark the hit on the board
 
     if (ship) {
-      ship.hit(); // Delegate the hit to the ship - will increment ship.numberOfHits
+      ship.hit(); // Increment ship.numberOfHits
     }
 
     // Ship is sunk
@@ -216,7 +213,11 @@ class GameBoard {
       return this.handleSunkShip();
     }
     // Message if ship not yet sunk
-    return { message: 'Hit!', remainingShips: this.remainingShips };
+    return {
+      message: 'Hit!',
+      remainingShips: this.remainingShips,
+      cellState: -1,
+    };
   }
 
   // Check if ship has been sunk
