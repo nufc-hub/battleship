@@ -82,8 +82,9 @@ class BoardRenderer {
     return true;
   }
 
-  toggleGameOverScreen() {
-    const gameOverDiv = document.getElementById('gameOverDiv');
+  // Used for displaying/ hiding game over screen
+  toggleGameOverScreen(gameOverElement) {
+    const gameOverDiv = document.getElementById(gameOverElement);
     gameOverDiv.style.display =
       gameOverDiv.style.display === 'none' ? 'flex' : 'none'; // Toggle display
   }
