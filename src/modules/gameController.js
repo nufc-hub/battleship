@@ -46,6 +46,24 @@ class GameController {
       return this.humanPlayer.gameBoard.receiveAttack(row, col);
     });
   }
+
+  handleGameOver() {
+    const humanPlayerGameBoard = this.humanPlayer.gameBoard;
+    const computerPlayerGameBoard = this.computerPlayer.gameBoard;
+
+    if (
+      humanPlayerGameBoard.areAllShipsSunk() || // Check if all ships are sunk
+      computerPlayerGameBoard.areAllShipsSunk()
+    ) {
+      humanPlayerGameBoard.clearGameBoard(); // Reset game board state for both players
+      computerPlayerGameBoard.clearGameBoard();
+    }
+    //Check if all ships are sunk
+    // if so trigger an event listener to display a message
+    // Add a button for starting a new game
+    // This button interacts with the board renderer by rendering new boards
+    // It interacts with the player's game board in the gameController by clearing the players game boards and previous attack set
+  }
 }
 // Create ships
 // Add ships to the gamebaord
