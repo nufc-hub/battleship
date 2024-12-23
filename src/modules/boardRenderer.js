@@ -25,8 +25,6 @@ class BoardRenderer {
         boardDiv.appendChild(cell);
       });
     });
-
-    console.log(gameBoard);
   }
 
   // Handle render errors
@@ -82,6 +80,12 @@ class BoardRenderer {
     }
 
     return true;
+  }
+
+  toggleGameOverScreen() {
+    const gameOverDiv = document.getElementById('gameOverDiv');
+    gameOverDiv.style.display =
+      gameOverDiv.style.display === 'none' ? 'flex' : 'none'; // Toggle display
   }
 }
 
