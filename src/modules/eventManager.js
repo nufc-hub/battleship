@@ -5,27 +5,35 @@ class EventManager {
   }
 
   // Attack clicks only added to computer-board
-  addAttackListeners(boardDivId) {
-    const boardDiv = document.getElementById(boardDivId); // Get board html element
+  addAttackListeners(computerBoardDivId, humanBoardDivId, gameOverElement) {
+    const boardDiv = document.getElementById(computerBoardDivId); // Get board html element
     const cells = boardDiv.childNodes; // Get cell html elements
 
-    if (boardDivId) {
+    if (computerBoardDivId) {
       // Add event listeners
       cells.forEach((cell) => {
         cell.addEventListener('click', () => {
           const row = parseInt(cell.dataset.row, 10); // Keep these in or not?
           const col = parseInt(cell.dataset.col, 10);
 
-          this.handleCellClick(cell, row, col);
+          this.handleCellClick(
+            cell,
+            row,
+            col,
+            gameOverElement,
+            humanBoardDivId
+          );
         });
       });
     } else {
-      console.error(`Board container with ID "${boardDivId}" not found.`);
+      console.error(
+        `Board container with ID "${computerBoardDivId}" not found.`
+      );
     }
   }
 
   // This is the result of the attack and will change the gameBoard appearance accordingly
-  handleCellClick(cell, row, col) {
+  handleCellClick(cell, row, col, gameOverElement, humanBoardDivId) {
     // Attack computer game board
     const humanAttackResult = this.gameController.processHumanAttack(row, col); // Human attack computer game board
 
@@ -35,6 +43,8 @@ class EventManager {
 
     this.boardRenderer.setCellColor(computerGameBoard, cell, row, col);
 
+    this.triggerGameOverScreen(gameOverElement); // triggers if all computer ships are sunk
+
     const {
       // Computer attacks human game board
       row: computerRow,
@@ -43,7 +53,7 @@ class EventManager {
     } = this.gameController.processComputerAttack();
 
     // Locate the corresponding cell in the human board's DOM
-    const humanBoardDiv = document.getElementById('human-board');
+    const humanBoardDiv = document.getElementById(humanBoardDivId);
     const humanBoardCell = humanBoardDiv.querySelector(
       `[data-row="${computerRow}"][data-col="${computerCol}"]`
     );
@@ -58,7 +68,7 @@ class EventManager {
       computerCol
     );
 
-    // After computer attack, update human board visually
+    this.triggerGameOverScreen(gameOverElement); // triggers if all computer ships are sunk
 
     console.log(
       'Human Attack - Row (0-based):',
@@ -78,9 +88,29 @@ class EventManager {
       this.gameController.computerPlayer
     );
   }
+
+  triggerGameOverScreen(gameOverElement) {
+    const humanPlayerGameBoard = this.gameController.humanPlayer.gameBoard; // Get game boards
+    const computerPlayerGameBoard =
+      this.gameController.computerPlayer.gameBoard;
+
+    if (
+      humanPlayerGameBoard.areAllShipsSunk() || // Check if either players ships are all sunk
+      computerPlayerGameBoard.areAllShipsSunk()
+    ) {
+      this.boardRenderer.toggleGameOverScreen(gameOverElement);
+    }
+  }
+
+  // startNewGame() {
+  //   // THis is for when the new game
+  //   // button is clicked in the game over screen
+  // this.gameController.handleGameOver(); //Add this to start new game function
+
+  //   //
+  // }
 }
 
 export default EventManager;
 
-// Get clicks to change human board cell color
 // Display appropriate message depending on board state
