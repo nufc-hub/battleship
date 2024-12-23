@@ -55,11 +55,12 @@ class GameController {
       humanPlayerGameBoard.areAllShipsSunk() || // Check if all ships are sunk
       computerPlayerGameBoard.areAllShipsSunk()
     ) {
-      humanPlayerGameBoard.clearGameBoard(); // Reset game board state for both players
-      computerPlayerGameBoard.clearGameBoard();
+      humanPlayerGameBoard.resetGameBoard(); // Reset game board state for both players
+      computerPlayerGameBoard.resetGameBoard();
     }
     //Check if all ships are sunk
     // if so trigger an event listener to display a message
+    // prevent anything else on the gameboards being clicked
     // Add a button for starting a new game
     // This button interacts with the board renderer by rendering new boards
     // It interacts with the player's game board in the gameController by clearing the players game boards and previous attack set
