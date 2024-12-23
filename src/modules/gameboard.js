@@ -9,6 +9,7 @@ class GameBoard {
     this.board = Array.from({ length: 10 }, () => Array(10).fill(0));
     this.ships = []; //Array to store placed ship and their position
     this.remainingShips = 0; // Used to track game over
+    // set it so that it equals the value of the placed ships when game starts
   }
 
   // Get ship at specified  coords from this.ships
@@ -244,6 +245,13 @@ class GameBoard {
 
   areAllShipsSunk() {
     return this.remainingShips === 0;
+  }
+
+  // Clears game board array, all ships and sets remaining ships to null
+  clearGameBoard() {
+    this.board = Array.from({ length: 10 }, () => Array(10).fill(0));
+    this.ships = [];
+    this.remainingShips = 0;
   }
 }
 
