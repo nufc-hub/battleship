@@ -5,10 +5,10 @@ class DomManager {
     this.eventManager = eventManager;
   }
 
-  renderGame(humanBoardDivId, computerBoardDivId) {
+  renderGame(humanBoardDivId, computerBoardDivId, gameOverElement) {
     this.renderHumanGameBoard(humanBoardDivId);
     this.renderComputerGameBoard(computerBoardDivId);
-    this.attachEvents(computerBoardDivId);
+    this.attachEvents(computerBoardDivId, humanBoardDivId, gameOverElement);
   }
 
   renderHumanGameBoard(humanBoardDivId) {
@@ -22,9 +22,11 @@ class DomManager {
     );
   }
 
-  attachEvents(ComputerBoardDivId) {
+  attachEvents(ComputerBoardDivId, humanBoardDivId, gameOverElement) {
     this.eventManager.addAttackListeners(
       ComputerBoardDivId,
+      humanBoardDivId,
+      gameOverElement,
       (gameBoard, cell, row, col) => {
         this.boardRenderer.setCellColor(gameBoard, cell, row, col);
       }
@@ -42,7 +44,7 @@ class DomManager {
     return gameBoard.board; // Return the board array
   }
 
-  // Used when re-rendering the board after a change in game board state
+  // Not used currently - clears cell in dom but not in player game board array
   clearBoard(boardDivId) {
     const boardDiv = document.getElementById(boardDivId);
     boardDiv.replaceChildren(); // Delete cells in game board
