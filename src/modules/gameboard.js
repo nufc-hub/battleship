@@ -244,11 +244,12 @@ class GameBoard {
   // Check if all ships have been sunk
 
   areAllShipsSunk() {
-    return this.remainingShips === 0;
+    const allSunk = this.ships.every((ship) => ship.isSunk());
+    return allSunk;
   }
 
   // Clears game board array, all ships and sets remaining ships to null
-  clearGameBoard() {
+  resetGameBoard() {
     this.board = Array.from({ length: 10 }, () => Array(10).fill(0));
     this.ships = [];
     this.remainingShips = 0;
