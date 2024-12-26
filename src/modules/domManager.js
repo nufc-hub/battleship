@@ -5,10 +5,9 @@ class DomManager {
     this.eventManager = eventManager;
   }
 
-  renderGame(humanBoardDivId, computerBoardDivId, gameOverElement) {
+  renderGame(humanBoardDivId, computerBoardDivId) {
     this.renderHumanGameBoard(humanBoardDivId);
     this.renderComputerGameBoard(computerBoardDivId);
-    this.attachEvents(computerBoardDivId, humanBoardDivId, gameOverElement);
   }
 
   renderHumanGameBoard(humanBoardDivId) {
@@ -19,17 +18,6 @@ class DomManager {
     this.boardRenderer.renderBoard(
       this.getComputerGameBoard(),
       computerBoardDivId
-    );
-  }
-
-  attachEvents(ComputerBoardDivId, humanBoardDivId, gameOverElement) {
-    this.eventManager.addAttackListeners(
-      ComputerBoardDivId,
-      humanBoardDivId,
-      gameOverElement,
-      (gameBoard, cell, row, col) => {
-        this.boardRenderer.setCellColor(gameBoard, cell, row, col);
-      }
     );
   }
 
