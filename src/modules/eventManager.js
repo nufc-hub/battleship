@@ -74,6 +74,21 @@ class EventManager {
     }
   }
 
+  startNewGame(
+    humanBoardDivId,
+    computerBoardDivId,
+    gameOverElement,
+    startNewGameButton
+  ) {
+    this.resetAndRenderGame(
+      humanBoardDivId,
+      computerBoardDivId,
+      gameOverElement,
+      startNewGameButton
+    );
+  }
+
+  // Used for setting up a new game, after a game over has occured
   resetAndRerenderGame(
     humanBoardDivId,
     computerBoardDivId,
