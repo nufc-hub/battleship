@@ -1,7 +1,18 @@
 class EventManager {
-  constructor(gameController, boardRenderer) {
+  constructor(
+    gameController,
+    boardRenderer,
+    humanBoardDivId,
+    computerBoardDivId,
+    gameOverElement,
+    startNewGameButton
+  ) {
     this.gameController = gameController;
     this.boardRenderer = boardRenderer;
+    this.humanBoardDivId = humanBoardDivId;
+    this.computerBoardDivId = computerBoardDivId;
+    this.gameOverElement = gameOverElement;
+    this.startNewGameButton = startNewGameButton;
   }
 
   // Attack clicks only added to computer-board
