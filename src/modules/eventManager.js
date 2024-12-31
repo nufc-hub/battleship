@@ -74,6 +74,44 @@ class EventManager {
     }
   }
 
+  resetAndRerenderGame(
+    humanBoardDivId,
+    computerBoardDivId,
+    gameOverElement
+    // startNewGameButton
+  ) {
+    this.gameController.handleGameOver(); // Reset board state
+
+    // Gameboards
+    const humanPlayerGameBoard = this.gameController.humanPlayer.gameBoard; // Get game boards
+    const computerPlayerGameBoard =
+      this.gameController.computerPlayer.gameBoard;
+
+    // Render player board
+    this.boardRenderer.renderBoard(humanPlayerGameBoard.board, humanBoardDivId);
+
+    // Render Computer board
+    this.boardRenderer.renderBoard(
+      computerPlayerGameBoard.board,
+      computerBoardDivId
+    );
+
+    // Clear event listeners
+    this.clearEventListeners(humanBoardDivId, computerBoardDivId);
+
+    // Attach new event listeners
+
+    // this.attachEvents(
+    //   computerBoardDivId,
+    //   humanBoardDivId,
+    //   gameOverElement,
+    //   startNewGameButton
+    // );
+
+    // Toggle game over screen
+    this.boardRenderer.toggleElementDisplay(gameOverElement);
+  }
+
   // This is the result of the attack and will change the gameBoard appearance accordingly
   handleCellClick(cell, row, col, gameOverElement, humanBoardDivId) {
     // Attack computer game board
