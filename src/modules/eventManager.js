@@ -80,7 +80,7 @@ class EventManager {
     gameOverElement,
     startNewGameButton
   ) {
-    this.resetAndRenderGame(
+    this.resetAndRerenderGame(
       humanBoardDivId,
       computerBoardDivId,
       gameOverElement,
