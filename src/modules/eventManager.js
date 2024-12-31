@@ -74,6 +74,20 @@ class EventManager {
     }
   }
 
+  addStartNewGameListeners(
+    humanBoardDivId,
+    computerBoardDivId,
+    gameOverElement,
+    startNewGameButton
+  ) {
+    const newGameButtons = document.querySelectorAll(startNewGameButton); // Button(s) to add event listener to
+    newGameButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        this.startNewGame(humanBoardDivId, computerBoardDivId, gameOverElement); // Functions to execute when button is clicked
+      });
+    });
+  }
+
   startNewGame(
     humanBoardDivId,
     computerBoardDivId,
