@@ -38,12 +38,24 @@ class EventManager {
     const humanAttackResult = this.gameController.processHumanAttack(row, col); // Human attack computer game board
 
     // After human attack, update computer board visually
-    const computerGameBoard =
-      this.gameController.computerPlayer.gameBoard.board;
+    const computerGameBoard = this.gameController.computerPlayer.gameBoard;
 
-    this.boardRenderer.setCellColor(computerGameBoard, cell, row, col);
+    this.boardRenderer.setCellColor(computerGameBoard.board, cell, row, col);
 
-    this.triggerGameOverScreen(gameOverElement); // triggers if all computer ships are sunk
+    console.log(
+      'Human Attack - Row (0-based):',
+      row,
+      'Col (0-based):',
+      col,
+      humanAttackResult,
+      this.gameController.computerPlayer
+    );
+
+    // Game stops. Player wins game
+    if (computerGameBoard.areAllShipsSunk()) {
+      this.triggerGameOverScreen(gameOverElement); // triggers if all computer ships are sunk
+      return;
+    }
 
     const {
       // Computer attacks human game board
@@ -59,25 +71,22 @@ class EventManager {
     );
 
     // After computer attack, update human board visually
-    const humanGameBoard = this.gameController.humanPlayer.gameBoard.board;
+    const humanGameBoard = this.gameController.humanPlayer.gameBoard;
 
     this.boardRenderer.setCellColor(
-      humanGameBoard,
+      humanGameBoard.board,
       humanBoardCell,
       computerRow,
       computerCol
     );
 
-    this.triggerGameOverScreen(gameOverElement); // triggers if all computer ships are sunk
+    // Game stops. Computer wins game
+    if (humanGameBoard.areAllShipsSunk()) {
+      this.triggerGameOverScreen(gameOverElement); // triggers if all computer ships are sunk
+      return;
+    }
 
-    console.log(
-      'Human Attack - Row (0-based):',
-      row,
-      'Col (0-based):',
-      col,
-      humanAttackResult,
-      this.gameController.humanPlayer
-    );
+    this.triggerGameOverScreen(gameOverElement); // triggers if all computer ships are sunk
 
     console.log(
       'Computer Attack - Row (0-based):',
@@ -85,7 +94,7 @@ class EventManager {
       'Col (0-based):',
       computerCol,
       computerAttackResult,
-      this.gameController.computerPlayer
+      this.gameController.humanPlayer
     );
   }
 
@@ -98,19 +107,11 @@ class EventManager {
       humanPlayerGameBoard.areAllShipsSunk() || // Check if either players ships are all sunk
       computerPlayerGameBoard.areAllShipsSunk()
     ) {
-      this.boardRenderer.toggleGameOverScreen(gameOverElement);
+      this.boardRenderer.toggleElementDisplay(gameOverElement); // Displays the game over screen
     }
   }
-
-  // startNewGame() {
-  //   // THis is for when the new game
-  //   // button is clicked in the game over screen
-  // this.gameController.handleGameOver(); //Add this to start new game function
-
-  //   //
-  // }
 }
 
 export default EventManager;
 
-// Display appropriate message depending on board state
+// Check game when remaining ship is not 0
