@@ -21,8 +21,7 @@ class BoardRenderer {
         cell.dataset.row = rowIndex;
         cell.dataset.col = colIndex;
 
-        // Append each cell to the board
-        boardDiv.appendChild(cell);
+        boardDiv.appendChild(cell); // Append each cell to the board
       });
     });
   }
@@ -82,11 +81,11 @@ class BoardRenderer {
     return true;
   }
 
-  // Used for displaying/ hiding game over screen
-  toggleGameOverScreen(gameOverElement) {
-    const gameOverDiv = document.getElementById(gameOverElement);
-    gameOverDiv.style.display =
-      gameOverDiv.style.display === 'none' ? 'flex' : 'none'; // Toggle display
+  // Used for displaying/ hiding an html element
+  toggleElementDisplay(element) {
+    const div = document.getElementById(element);
+    div.style.display = div.style.display === 'flex' ? 'none' : 'flex'; // Toggle display
+    console.log(div.style.display);
   }
 }
 
