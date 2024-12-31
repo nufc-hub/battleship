@@ -15,6 +15,18 @@ class EventManager {
     this.startNewGameButton = startNewGameButton;
   }
 
+  attachEvents(computerBoardDivId, humanBoardDivId, gameOverElement) {
+    this.addAttackListeners(
+      // Add attack events
+      computerBoardDivId,
+      humanBoardDivId,
+      gameOverElement,
+      (gameBoard, cell, row, col) => {
+        this.boardRenderer.setCellColor(gameBoard, cell, row, col);
+      }
+    );
+  }
+
   // Remove event listeners from board cells
   clearEventListeners(humanBoardDivId, computerBoardDivId) {
     const humanBoardDiv = document.getElementById(humanBoardDivId); // Get board html element
