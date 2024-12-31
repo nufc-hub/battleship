@@ -15,7 +15,12 @@ class EventManager {
     this.startNewGameButton = startNewGameButton;
   }
 
-  attachEvents(computerBoardDivId, humanBoardDivId, gameOverElement) {
+  attachEvents(
+    computerBoardDivId,
+    humanBoardDivId,
+    gameOverElement,
+    startNewGameButton
+  ) {
     this.addAttackListeners(
       // Add attack events
       computerBoardDivId,
@@ -24,6 +29,14 @@ class EventManager {
       (gameBoard, cell, row, col) => {
         this.boardRenderer.setCellColor(gameBoard, cell, row, col);
       }
+    );
+
+    this.addStartNewGameListeners(
+      // Add start new game click events
+      humanBoardDivId,
+      computerBoardDivId,
+      gameOverElement,
+      startNewGameButton
     );
   }
 
