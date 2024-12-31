@@ -106,8 +106,8 @@ class EventManager {
   resetAndRerenderGame(
     humanBoardDivId,
     computerBoardDivId,
-    gameOverElement
-    // startNewGameButton
+    gameOverElement,
+    startNewGameButton
   ) {
     this.gameController.handleGameOver(); // Reset board state
 
@@ -130,12 +130,12 @@ class EventManager {
 
     // Attach new event listeners
 
-    // this.attachEvents(
-    //   computerBoardDivId,
-    //   humanBoardDivId,
-    //   gameOverElement,
-    //   startNewGameButton
-    // );
+    this.attachEvents(
+      computerBoardDivId,
+      humanBoardDivId,
+      gameOverElement,
+      startNewGameButton
+    );
 
     // Toggle game over screen
     this.boardRenderer.toggleElementDisplay(gameOverElement);
