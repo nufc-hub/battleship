@@ -1,5 +1,10 @@
 class Ship {
   constructor(length, isHorizontal) {
+    if (length <= 0 || length > 5) {
+      // Validate ship length
+      throw new Error('Invalid ship length. Must be between 1 and 5.');
+    }
+
     this.length = length;
     this.isHorizontal = isHorizontal; // Game board will check ship orientation during placement
     this.numberOfHits = 0;
