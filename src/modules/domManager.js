@@ -5,9 +5,21 @@ class DomManager {
     this.eventManager = eventManager;
   }
 
-  renderGame(humanBoardDivId, computerBoardDivId) {
+  renderGame(
+    humanBoardDivId,
+    computerBoardDivId,
+    gameOverElement,
+    startNewGameButton
+  ) {
     this.renderHumanGameBoard(humanBoardDivId);
     this.renderComputerGameBoard(computerBoardDivId);
+    this.eventManager.clearEventListeners(humanBoardDivId, computerBoardDivId);
+    this.eventManager.attachEvents(
+      computerBoardDivId,
+      humanBoardDivId,
+      gameOverElement,
+      startNewGameButton
+    );
   }
 
   renderHumanGameBoard(humanBoardDivId) {
