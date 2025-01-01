@@ -21,8 +21,8 @@ class EventManager {
     gameOverElement,
     startNewGameButton
   ) {
-    this.addAttackListeners(
-      // Add attack events
+    this.attachAttackListeners(
+      // Attach attack events
       computerBoardDivId,
       humanBoardDivId,
       gameOverElement,
@@ -31,8 +31,8 @@ class EventManager {
       }
     );
 
-    this.addStartNewGameListeners(
-      // Add start new game click events
+    this.attachStartNewGameListeners(
+      // attach start new game click events
       humanBoardDivId,
       computerBoardDivId,
       gameOverElement,
@@ -59,13 +59,13 @@ class EventManager {
     });
   }
 
-  // Attack clicks only added to computer-board
-  addAttackListeners(computerBoardDivId, humanBoardDivId, gameOverElement) {
+  // Attack clicks only attached to computer-board
+  attachAttackListeners(computerBoardDivId, humanBoardDivId, gameOverElement) {
     const boardDiv = document.getElementById(computerBoardDivId); // Get board html element
     const cells = boardDiv.childNodes; // Get cell html elements
 
     if (computerBoardDivId) {
-      // Add event listeners
+      // Attach event listeners
       cells.forEach((cell) => {
         cell.addEventListener('click', () => {
           const row = parseInt(cell.dataset.row, 10); // Keep these in or not?
@@ -87,13 +87,13 @@ class EventManager {
     }
   }
 
-  addStartNewGameListeners(
+  attachStartNewGameListeners(
     humanBoardDivId,
     computerBoardDivId,
     gameOverElement,
     startNewGameButton
   ) {
-    const newGameButtons = document.querySelectorAll(startNewGameButton); // Button(s) to add event listener to
+    const newGameButtons = document.querySelectorAll(startNewGameButton); // Button(s) to attach event listener to
     newGameButtons.forEach((button) => {
       button.addEventListener('click', () => {
         this.startNewGame(humanBoardDivId, computerBoardDivId, gameOverElement); // Functions to execute when button is clicked
