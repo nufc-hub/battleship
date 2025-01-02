@@ -1,6 +1,6 @@
-// import Ship from '../modules/ship';
-import GameBoard from '../modules/gameboard.js';
 import Player from '../modules/player.js';
+import GameBoard from './gameboard.js';
+import Ship from './ship.js';
 
 // To place a ship:
 // const humanPlayerGameBoard = this.humanplayer.gameBoard
@@ -12,18 +12,21 @@ class GameController {
   constructor() {
     this.humanPlayer = null;
     this.computerPlayer = null;
+    this.ships = [
+      { name: 'carrier', length: 5 },
+      { name: 'battleship', length: 4 },
+      { name: 'cruiser', length: 3 },
+      { name: 'submarine', length: 3 },
+      { name: 'destroyer', length: 2 },
+    ];
   }
 
   initGameController() {
-    const humanGameBoard = this.createGameBoard();
-    const computerGameBoard = this.createGameBoard();
-    this.createHumanPlayer(humanGameBoard);
-    this.createComputerPlayer(computerGameBoard);
-  }
-
-  // Create gameBoard instance
-  createGameBoard() {
-    return new GameBoard();
+    // Create players and player boards
+    this.createHumanPlayer(this.createGameBoard());
+    this.createComputerPlayer(this.createGameBoard());
+    this.placeShipsRandomly(this.humanPlayer);
+    this.placeShipsRandomly(this.computerPlayer);
   }
 
   //Create a human player with its own gameBoard
@@ -48,26 +51,29 @@ class GameController {
   }
 
   handleGameOver() {
-    const humanPlayerGameBoard = this.humanPlayer.gameBoard;
-    const computerPlayerGameBoard = this.computerPlayer.gameBoard;
+    const humanGameBoardObj = this.humanPlayer.gameBoard;
+    const computerGameBoardObj = this.computerPlayer.gameBoard;
 
     if (
-      humanPlayerGameBoard.areAllShipsSunk() || // Check if all ships are sunk
-      computerPlayerGameBoard.areAllShipsSunk()
+      humanGameBoardObj.areAllShipsSunk() || // Check if all ships are sunk
+      computerGameBoardObj.areAllShipsSunk()
     ) {
-      humanPlayerGameBoard.resetGameBoard(); // Reset game board state for both players
-      computerPlayerGameBoard.resetGameBoard();
+      humanGameBoardObj.resetGameBoard(); // Reset game board state for both players
+      computerGameBoardObj.resetGameBoard();
+
+      this.humanPlayer.resetPreviousAttack(); // Reset previousAttack set for both players
+      this.computerPlayer.resetPreviousAttack();
     }
-    //Check if all ships are sunk
-    // if so trigger an event listener to display a message
-    // prevent anything else on the gameboards being clicked
-    // Add a button for starting a new game
-    // This button interacts with the board renderer by rendering new boards
-    // It interacts with the player's game board in the gameController by clearing the players game boards and previous attack set
   }
 }
+
 // Create ships
+
+// Add computer ships when creating the computer player and gameboard
+
+// Add human ships after creating the human player and gameboard
+
 // Add ships to the gamebaord
-// Add ability for both players to attack
+
 // Add ability to restart game at anypoint and when game is over
 export default GameController;
