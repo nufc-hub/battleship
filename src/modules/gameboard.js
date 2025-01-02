@@ -15,8 +15,8 @@ class GameBoard {
   // Get ship at specified  coords from this.ships
 
   getShip(row, col) {
-    const rowIndex = row - 1;
-    const colIndex = col - 1;
+    const rowIndex = row;
+    const colIndex = col;
     // loop through this.ships
     for (const { ship, positions } of this.ships) {
       if (positions.some(([r, c]) => r === rowIndex && c === colIndex)) {
@@ -56,8 +56,8 @@ class GameBoard {
 
   placeShipHorizontal(row, col, ship) {
     const { length, isHorizontal } = ship;
-    const rowIndex = row - 1;
-    const colIndex = col - 1;
+    const rowIndex = row;
+    const colIndex = col;
     const shipPositions = [];
 
     // Horizontally
@@ -75,8 +75,8 @@ class GameBoard {
 
   placeShipVertical(row, col, ship) {
     const { length, isHorizontal } = ship;
-    const rowIndex = row - 1;
-    const colIndex = col - 1;
+    const rowIndex = row;
+    const colIndex = col;
     const shipPositions = [];
 
     // Vertically
@@ -95,8 +95,8 @@ class GameBoard {
   // Checks ship is being placed within boundaries of board
   isValidPlacement(row, col, ship) {
     const { length, isHorizontal } = ship;
-    const rowIndex = row - 1;
-    const colIndex = col - 1;
+    const rowIndex = row;
+    const colIndex = col;
 
     // Check horizontal placement
     if (isHorizontal && colIndex + length > this.board.length) {
@@ -113,8 +113,8 @@ class GameBoard {
   // Checks if ship is overlapping with another ship
   isOverlapping(row, col, ship) {
     const { length, isHorizontal } = ship;
-    const rowIndex = row - 1;
-    const colIndex = col - 1;
+    const rowIndex = row;
+    const colIndex = col;
 
     for (let i = 0; i < length; i++) {
       if (isHorizontal) {
