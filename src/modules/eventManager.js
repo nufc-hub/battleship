@@ -5,7 +5,8 @@ class EventManager {
     humanBoardDivId,
     computerBoardDivId,
     gameOverElement,
-    startNewGameButton
+    startNewGameButton,
+    randomlyPlaceShipsButton
   ) {
     this.gameController = gameController;
     this.boardRenderer = boardRenderer;
@@ -13,14 +14,19 @@ class EventManager {
     this.computerBoardDivId = computerBoardDivId;
     this.gameOverElement = gameOverElement;
     this.startNewGameButton = startNewGameButton;
+    this.randomlyPlaceShipsButton = randomlyPlaceShipsButton;
   }
 
   attachEvents(
     computerBoardDivId,
     humanBoardDivId,
     gameOverElement,
-    startNewGameButton
+    startNewGameButton,
+    randomlyPlaceShipsButton
   ) {
+    // Attach place human player ships randomly event
+    this.attachPlaceShipsRandomlyListener(randomlyPlaceShipsButton);
+
     this.attachAttackListeners(
       // Attach attack events
       computerBoardDivId,
@@ -56,6 +62,19 @@ class EventManager {
     computerboardCells.forEach((cell) => {
       const newcell = cell.cloneNode(true); // Clone the element to remove listeners
       cell.parentNode.replaceChild(newcell, cell); // Replace old element with new
+    });
+  }
+
+  // Attach event to placeShipsRandomly button - used only for human player placing ships
+  attachPlaceShipsRandomlyListener(randomlyPlaceShipsButton) {
+    const placeShipsRandomlyButton = document.getElementById(
+      randomlyPlaceShipsButton
+    );
+
+    // When button is clicked human player ships will be placed randomly
+    // Computer player ships are always set randomly during game init
+    placeShipsRandomlyButton.addEventListener('click', () => {
+      this.gameController.placeShipsRandomly(this.gameController.humanPlayer);
     });
   }
 
