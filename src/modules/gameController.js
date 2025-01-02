@@ -25,7 +25,6 @@ class GameController {
     // Create players and player boards
     this.createHumanPlayer(this.createGameBoard());
     this.createComputerPlayer(this.createGameBoard());
-    this.placeShipsRandomly(this.humanPlayer);
     this.placeShipsRandomly(this.computerPlayer);
   }
 
@@ -41,6 +40,34 @@ class GameController {
 
   createGameBoard() {
     return new GameBoard();
+  }
+
+  // Places all five ships radomly on the game board
+  // Use player parameter to set which players ships are placed randomly
+  placeShipsRandomly(player) {
+    this.ships.forEach((shipConfig) => {
+      // Loop through each object in this.ships array
+      let placed = false;
+
+      while (!placed) {
+        const isHorizontal = Math.random() < 0.5; // Used to randomly set ship orientation
+        const row = Math.floor(Math.random() * 10);
+        const col = Math.floor(Math.random() * 10);
+        const ship = new Ship(shipConfig.length, isHorizontal);
+        try {
+          // Keep trying to place ship until successfully placed on board
+          player.gameBoard.placeShip(row, col, ship);
+
+          placed = true; // Ship successfully placed and loop stops
+        } catch (error) {
+          // Handle placement errors, e.g., overlap or out-of-bounds
+          console.log(`Error placing ship: ${error.message}`);
+        }
+
+        console.log(this.humanPlayer);
+        console.log(this.computerPlayer);
+      }
+    });
   }
 
   // Used by the DOM module when handling a cell click - changes boards' state depending on hit/ miss
