@@ -244,7 +244,8 @@ class GameBoard {
   // Check if all ships have been sunk
 
   areAllShipsSunk() {
-    const allSunk = this.ships.every((ship) => ship.isSunk());
+    console.log(this.ships);
+    const allSunk = this.ships.every(({ ship }) => ship.isSunk());
     return allSunk;
   }
 
