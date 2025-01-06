@@ -24,25 +24,14 @@ class EventManager {
     startNewGameButton,
     randomlyPlaceShipsButton
   ) {
-    // Attach place human player ships randomly event
-    this.attachPlaceShipsRandomlyListener(randomlyPlaceShipsButton);
-
-    this.attachAttackListeners(
-      // Attach attack events
-      computerBoardDivId,
-      humanBoardDivId,
-      gameOverElement,
-      (gameBoard, cell, row, col) => {
-        this.boardRenderer.setCellColor(gameBoard, cell, row, col);
-      }
-    );
-
-    this.attachStartNewGameListeners(
-      // attach start new game click events
+    // Add board and button events
+    this.addBoardEvents(computerBoardDivId, humanBoardDivId, gameOverElement);
+    this.addButtonEvents(
       humanBoardDivId,
       computerBoardDivId,
       gameOverElement,
-      startNewGameButton
+      startNewGameButton,
+      randomlyPlaceShipsButton
     );
   }
 
@@ -63,6 +52,38 @@ class EventManager {
       const newcell = cell.cloneNode(true); // Clone the element to remove listeners
       cell.parentNode.replaceChild(newcell, cell); // Replace old element with new
     });
+  }
+
+  addBoardEvents(computerBoardDivId, humanBoardDivId, gameOverElement) {
+    this.attachAttackListeners(
+      // Attach attack events
+      computerBoardDivId,
+      humanBoardDivId,
+      gameOverElement,
+      (gameBoard, cell, row, col) => {
+        this.boardRenderer.setCellColor(gameBoard, cell, row, col);
+      }
+    );
+  }
+
+  addButtonEvents(
+    humanBoardDivId,
+    computerBoardDivId,
+    gameOverElement,
+    startNewGameButton,
+    randomlyPlaceShipsButton
+  ) {
+    // Attach place human player ships randomly event
+    this.attachPlaceShipsRandomlyListener(randomlyPlaceShipsButton);
+
+    this.attachStartNewGameListeners(
+      // attach start new game click events
+      humanBoardDivId,
+      computerBoardDivId,
+      gameOverElement,
+      startNewGameButton,
+      randomlyPlaceShipsButton
+    );
   }
 
   // Attach event to placeShipsRandomly button - used only for human player placing ships
@@ -110,12 +131,19 @@ class EventManager {
     humanBoardDivId,
     computerBoardDivId,
     gameOverElement,
-    startNewGameButton
+    startNewGameButton,
+    randomlyPlaceShipsButton
   ) {
     const newGameButtons = document.querySelectorAll(startNewGameButton); // Button(s) to attach event listener to
     newGameButtons.forEach((button) => {
       button.addEventListener('click', () => {
-        this.startNewGame(humanBoardDivId, computerBoardDivId, gameOverElement); // Functions to execute when button is clicked
+        this.startNewGame(
+          humanBoardDivId,
+          computerBoardDivId,
+          gameOverElement,
+          startNewGameButton,
+          randomlyPlaceShipsButton
+        ); // Functions to execute when button is clicked
       });
     });
   }
@@ -124,23 +152,20 @@ class EventManager {
     humanBoardDivId,
     computerBoardDivId,
     gameOverElement,
-    startNewGameButton
+    startNewGameButton,
+    randomlyPlaceShipsButton
   ) {
     this.resetAndRerenderGame(
       humanBoardDivId,
       computerBoardDivId,
       gameOverElement,
-      startNewGameButton
+      startNewGameButton,
+      randomlyPlaceShipsButton
     );
   }
 
   // Used for setting up a new game, after a game over has occured
-  resetAndRerenderGame(
-    humanBoardDivId,
-    computerBoardDivId,
-    gameOverElement,
-    startNewGameButton
-  ) {
+  resetAndRerenderGame(humanBoardDivId, computerBoardDivId, gameOverElement) {
     this.gameController.handleGameOver(); // Reset board state
 
     // Gameboards
@@ -157,20 +182,17 @@ class EventManager {
       computerBoardDivId
     );
 
-    // Clear event listeners
-    this.clearEventListeners(humanBoardDivId, computerBoardDivId);
-
     // Attach new event listeners
+    this.addBoardEvents(computerBoardDivId, humanBoardDivId, gameOverElement);
 
-    this.attachEvents(
-      computerBoardDivId,
-      humanBoardDivId,
-      gameOverElement,
-      startNewGameButton
-    );
+    // Place computer ships
+    this.gameController.placeShipsRandomly(this.gameController.computerPlayer);
 
     // Toggle game over screen
     this.boardRenderer.toggleElementDisplay(gameOverElement);
+
+    console.log(this.gameController.humanPlayer.gameBoard);
+    console.log(this.gameController.computerPlayer.gameBoard);
   }
 
   // This is the result of the attack and will change the gameBoard appearance accordingly
