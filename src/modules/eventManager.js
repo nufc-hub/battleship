@@ -86,18 +86,7 @@ class EventManager {
     );
   }
 
-  // Attach event to placeShipsRandomly button - used only for human player placing ships
-  attachPlaceShipsRandomlyListener(randomlyPlaceShipsButton) {
-    const placeShipsRandomlyButton = document.getElementById(
-      randomlyPlaceShipsButton
-    );
-
-    // When button is clicked human player ships will be placed randomly
-    // Computer player ships are always set randomly during game init
-    placeShipsRandomlyButton.addEventListener('click', () => {
-      this.gameController.placeShipsRandomly(this.gameController.humanPlayer);
-    });
-  }
+  // Board listeners
 
   // Attack clicks only attached to computer-board
   attachAttackListeners(computerBoardDivId, humanBoardDivId, gameOverElement) {
@@ -127,6 +116,23 @@ class EventManager {
     }
   }
 
+  // Button listeners
+
+  // Attach event to placeShipsRandomly button - used only for human player placing ships
+  attachPlaceShipsRandomlyListener(randomlyPlaceShipsButton) {
+    const placeShipsRandomlyButton = document.getElementById(
+      randomlyPlaceShipsButton
+    );
+
+    // When button is clicked human player ships will be placed randomly
+    // Computer player ships are always set randomly during game init
+    placeShipsRandomlyButton.addEventListener('click', () => {
+      this.gameController.placeShipsRandomly(this.gameController.humanPlayer);
+      // Toggle button display to none
+      this.boardRenderer.toggleElementDisplay(randomlyPlaceShipsButton);
+    });
+  }
+
   attachStartNewGameListeners(
     humanBoardDivId,
     computerBoardDivId,
@@ -137,13 +143,16 @@ class EventManager {
     const newGameButtons = document.querySelectorAll(startNewGameButton); // Button(s) to attach event listener to
     newGameButtons.forEach((button) => {
       button.addEventListener('click', () => {
+        // Display the placeShipsRandomly button
+        this.boardRenderer.toggleElementDisplay(randomlyPlaceShipsButton);
+        // Set up game boards, render boards, etc
         this.startNewGame(
           humanBoardDivId,
           computerBoardDivId,
           gameOverElement,
           startNewGameButton,
           randomlyPlaceShipsButton
-        ); // Functions to execute when button is clicked
+        );
       });
     });
   }
@@ -277,4 +286,6 @@ class EventManager {
 
 export default EventManager;
 
-// Check game when remaining ship is not 0
+// Dont let an already clicked cell be clicked again
+// If you click same computer cell twice
+// computer will take it turn again
