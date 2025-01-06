@@ -84,8 +84,20 @@ class BoardRenderer {
   // Used for displaying/ hiding an html element
   toggleElementDisplay(element) {
     const div = document.getElementById(element);
-    div.style.display = div.style.display === 'flex' ? 'none' : 'flex'; // Toggle display
-    console.log(div.style.display);
+    if (!div) {
+      console.error(`Element with ID "${element}" not found.`);
+      return;
+    }
+
+    // Get the computed style to account for stylesheet values
+    const computedStyle = window.getComputedStyle(div);
+
+    // Toggle display based on the computed value
+    if (computedStyle.display === 'none') {
+      div.style.display = 'flex'; // Set inline style to flex
+    } else {
+      div.style.display = 'none'; // Set inline style to none
+    }
   }
 }
 
