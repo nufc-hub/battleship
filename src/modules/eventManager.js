@@ -96,18 +96,27 @@ class EventManager {
     if (computerBoardDivId) {
       // Attach event listeners
       cells.forEach((cell) => {
-        cell.addEventListener('click', () => {
-          const row = parseInt(cell.dataset.row, 10); // Keep these in or not?
-          const col = parseInt(cell.dataset.col, 10);
-
-          this.handleCellClick(
-            cell,
-            row,
-            col,
-            gameOverElement,
-            humanBoardDivId
-          );
-        });
+        cell.addEventListener(
+          'click',
+          () => {
+            const row = parseInt(cell.dataset.row, 10); // Keep these in or not?
+            const col = parseInt(cell.dataset.col, 10);
+            if (
+              // Prevent board clicks before ships have been placed.
+              this.gameController.humanPlayer.gameBoard.remainingShips !== 0 &&
+              this.gameController.computerPlayer.gameBoard.remainingShips !== 0
+            ) {
+              this.handleCellClick(
+                cell,
+                row,
+                col,
+                gameOverElement,
+                humanBoardDivId
+              );
+            }
+          },
+          { once: true }
+        );
       });
     } else {
       console.error(
@@ -236,6 +245,15 @@ class EventManager {
       Result: computerAttackResult,
     } = this.gameController.processComputerAttack();
 
+    console.log(
+      'Computer Attack - Row (0-based):',
+      computerRow,
+      'Col (0-based):',
+      computerCol,
+      computerAttackResult,
+      this.gameController.humanPlayer
+    );
+
     // Locate the corresponding cell in the human board's DOM
     const humanBoardDiv = document.getElementById(humanBoardDivId);
     const humanBoardCell = humanBoardDiv.querySelector(
@@ -257,17 +275,6 @@ class EventManager {
       this.triggerGameOverScreen(gameOverElement); // triggers if all computer ships are sunk
       return;
     }
-
-    this.triggerGameOverScreen(gameOverElement); // triggers if all computer ships are sunk
-
-    console.log(
-      'Computer Attack - Row (0-based):',
-      computerRow,
-      'Col (0-based):',
-      computerCol,
-      computerAttackResult,
-      this.gameController.humanPlayer
-    );
   }
 
   triggerGameOverScreen(gameOverElement) {
@@ -285,7 +292,3 @@ class EventManager {
 }
 
 export default EventManager;
-
-// Dont let an already clicked cell be clicked again
-// If you click same computer cell twice
-// computer will take it turn again
