@@ -17,14 +17,25 @@ class GameController {
     this.stateChangeListeners = []; // Listeners for state changes
   }
 
-  // Once game is ready, board clicks will be allowed.
-  isGameReady() {
-    return this.gameState === 'ready';
+  // Subscribe to game state changes
+  onGameStateChange(callback) {
+    this.stateChangeListeners.push(callback);
+  }
+
+  // Loops through all listeners and notifies them of state change
+  notifyGameStateChange() {
+    this.stateChangeListeners.forEach((callback) => callback(this.gameState));
   }
 
   // Used after ships have been placed. Possibly refactor to use for when game is over too. And for when a new game starts.
   setGameState(state) {
     this.gameState = state;
+    this.notifyGameStateChange();
+  }
+
+  // Once game is ready, board clicks will be allowed.
+  isGameReady() {
+    return this.gameState === 'ready';
   }
 
   initGameController() {
