@@ -15,6 +15,17 @@ class EventManager {
     this.gameOverElement = gameOverElement;
     this.startNewGameButton = startNewGameButton;
     this.randomlyPlaceShipsButton = randomlyPlaceShipsButton;
+
+    // Listen for game state changes
+    this.gameController.onGameStateChange((newState) => {
+      if (newState === 'ready') {
+        this.addBoardEvents(
+          computerBoardDivId,
+          humanBoardDivId,
+          gameOverElement
+        );
+      }
+    });
   }
 
   // Remove event listeners from board cells
