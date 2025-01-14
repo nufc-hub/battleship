@@ -141,6 +141,9 @@ class EventManager {
 
       // Toggle button display to none
       this.boardRenderer.toggleElementDisplay(randomlyPlaceShipsButton);
+
+      // Set gameContoroller.gameState to 'ready'.
+      this.gameController.setGameState('ready');
     });
   }
 
@@ -182,6 +185,7 @@ class EventManager {
       startNewGameButton,
       randomlyPlaceShipsButton
     );
+    this.gameController.setGameState('placingShips');
   }
 
   // Used for setting up a new game, after a game over has occured
