@@ -17,24 +17,6 @@ class EventManager {
     this.randomlyPlaceShipsButton = randomlyPlaceShipsButton;
   }
 
-  attachEvents(
-    computerBoardDivId,
-    humanBoardDivId,
-    gameOverElement,
-    startNewGameButton,
-    randomlyPlaceShipsButton
-  ) {
-    // Add board and button events
-    this.addBoardEvents(computerBoardDivId, humanBoardDivId, gameOverElement);
-    this.addButtonEvents(
-      humanBoardDivId,
-      computerBoardDivId,
-      gameOverElement,
-      startNewGameButton,
-      randomlyPlaceShipsButton
-    );
-  }
-
   // Remove event listeners from board cells
   clearEventListeners(humanBoardDivId, computerBoardDivId) {
     const humanBoardDiv = document.getElementById(humanBoardDivId); // Get board html element
