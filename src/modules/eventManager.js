@@ -199,9 +199,6 @@ class EventManager {
       computerBoardDivId
     );
 
-    // Attach new event listeners
-    this.addBoardEvents(computerBoardDivId, humanBoardDivId, gameOverElement);
-
     // Place computer ships
     this.gameController.placeShipsRandomly(this.gameController.computerPlayer);
 
