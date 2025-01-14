@@ -99,6 +99,8 @@ class GameController {
 
       this.humanPlayer.resetPreviousAttack(); // Reset previousAttack set for both players
       this.computerPlayer.resetPreviousAttack();
+
+      this.gameState = 'gameOver';
     }
   }
 }
