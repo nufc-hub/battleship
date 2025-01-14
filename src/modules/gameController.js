@@ -16,6 +16,10 @@ class GameController {
     this.gameState = 'placingShips';
   }
 
+  isGameReady() {
+    return this.gameState === 'ready';
+  }
+
   initGameController() {
     // Create players and player boards
     this.createHumanPlayer(this.createGameBoard());
