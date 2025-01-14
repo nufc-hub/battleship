@@ -13,7 +13,8 @@ class GameController {
       { name: 'submarine', length: 3 },
       { name: 'destroyer', length: 2 },
     ];
-    this.gameState = 'placingShips'; // Other state include 'ready' will possibly refactor to add 'game over' state later
+    this.gameState = 'placingShips'; // Initial state // Other state include 'ready' will possibly refactor to add 'game over' state later
+    this.stateChangeListeners = []; // Listeners for state changes
   }
 
   // Once game is ready, board clicks will be allowed.
