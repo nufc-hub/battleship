@@ -99,21 +99,22 @@ class EventManager {
         cell.addEventListener(
           'click',
           () => {
-            const row = parseInt(cell.dataset.row, 10); // Keep these in or not?
-            const col = parseInt(cell.dataset.col, 10);
-            if (
-              // Prevent board clicks before ships have been placed.
-              this.gameController.humanPlayer.gameBoard.remainingShips !== 0 &&
-              this.gameController.computerPlayer.gameBoard.remainingShips !== 0
-            ) {
-              this.handleCellClick(
-                cell,
-                row,
-                col,
-                gameOverElement,
-                humanBoardDivId
+            if (!this.gameController.isGameReady()) {
+              // Edit later to give a message on the screen
+              return console.warn(
+                'Game not ready yet. Place your ships first!'
               );
             }
+            const row = parseInt(cell.dataset.row, 10); // Keep these in or not?
+            const col = parseInt(cell.dataset.col, 10);
+
+            this.handleCellClick(
+              cell,
+              row,
+              col,
+              gameOverElement,
+              humanBoardDivId
+            );
           },
           { once: true }
         );
@@ -137,6 +138,7 @@ class EventManager {
     // Computer player ships are always set randomly during game init
     placeShipsRandomlyButton.addEventListener('click', () => {
       this.gameController.placeShipsRandomly(this.gameController.humanPlayer);
+
       // Toggle button display to none
       this.boardRenderer.toggleElementDisplay(randomlyPlaceShipsButton);
     });
@@ -292,3 +294,5 @@ class EventManager {
 }
 
 export default EventManager;
+
+// Prevent click cell from becoming deactivated if cell is clicked before ships are placed
