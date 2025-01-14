@@ -2,12 +2,6 @@ import Player from '../modules/player.js';
 import GameBoard from './gameboard.js';
 import Ship from './ship.js';
 
-// To place a ship:
-// const humanPlayerGameBoard = this.humanplayer.gameBoard
-// humanPlayerGameBoard.placeShip(.., ..)
-
-// Same for computuer placing a ships
-
 class GameController {
   constructor() {
     this.humanPlayer = null;
@@ -19,6 +13,7 @@ class GameController {
       { name: 'submarine', length: 3 },
       { name: 'destroyer', length: 2 },
     ];
+    this.gameState = 'placingShips';
   }
 
   initGameController() {
