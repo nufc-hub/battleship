@@ -26,6 +26,24 @@ class BoardRenderer {
     });
   }
 
+  // Renders player ships onto game board
+  renderPlayerShips(boardDivId, gameBoard) {
+    const boardDiv = document.getElementById(boardDivId);
+    console.log(boardDiv); // This is keeping old css classes
+    console.log(gameBoard); // Gameboard is not being reset
+
+    gameBoard.forEach((row, rowIndex) => {
+      row.forEach((_, colIndex) => {
+        const flatIndex = rowIndex * gameBoard[0].length + colIndex; // Get html element position
+        const cellElement = boardDiv.children[flatIndex];
+        // Update cell colour based on game state
+
+        this.setCellColor(gameBoard, cellElement, rowIndex, colIndex);
+        console.log(cellElement.className);
+      });
+    });
+  }
+
   // Handle render errors
   renderErrorHandling(gameBoard, boardDiv, boardDivId) {
     if (!Array.isArray(gameBoard)) {
