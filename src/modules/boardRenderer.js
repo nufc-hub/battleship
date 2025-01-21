@@ -16,7 +16,7 @@ class BoardRenderer {
     gameBoard.forEach((row, rowIndex) => {
       row.forEach((col, colIndex) => {
         const cell = document.createElement('div');
-        cell.classList = 'board-cell-empty';
+        cell.classList = 'board-cell';
         cell.dataset.value = col; // Placeholder.Change this later to represent the ship there.
         cell.dataset.row = rowIndex;
         cell.dataset.col = colIndex;
@@ -47,19 +47,17 @@ class BoardRenderer {
       return;
     }
 
+    // Clear all previous classes except the default 'board-cell'
+    cell.className = 'board-cell';
+
     // Get the value at the gameBoard array index
     const value = gameBoard[row][col];
-
-    // Remove cell class
-    cell.classList.remove(
-      'board-cell-hit',
-      'board-cell-miss',
-      'board-cell-empty'
-    );
 
     // Add new class depending on board state
     if (value === -2) {
       cell.classList.add('board-cell-miss'); // Attack misses
+    } else if (value === 1) {
+      cell.classList.add('board-cell-player-ship');
     } else if (value === -1) {
       cell.classList.add('board-cell-hit'); // Attack hits
     }
@@ -84,6 +82,8 @@ class BoardRenderer {
   // Used for displaying/ hiding an html element
   toggleElementDisplay(element) {
     const div = document.getElementById(element);
+
+    // Make sure element exists
     if (!div) {
       console.error(`Element with ID "${element}" not found.`);
       return;
