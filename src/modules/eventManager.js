@@ -67,7 +67,10 @@ class EventManager {
     randomlyPlaceShipsButton
   ) {
     // Attach place human player ships randomly event
-    this.attachPlaceShipsRandomlyListener(randomlyPlaceShipsButton);
+    this.attachPlaceShipsRandomlyListener(
+      randomlyPlaceShipsButton,
+      humanBoardDivId
+    );
 
     this.attachStartNewGameListeners(
       // attach start new game click events
@@ -122,7 +125,7 @@ class EventManager {
   // Button listeners
 
   // Attach event to placeShipsRandomly button - used only for human player placing ships
-  attachPlaceShipsRandomlyListener(randomlyPlaceShipsButton) {
+  attachPlaceShipsRandomlyListener(randomlyPlaceShipsButton, boardDivId) {
     const placeShipsRandomlyButton = document.getElementById(
       randomlyPlaceShipsButton
     );
@@ -130,7 +133,14 @@ class EventManager {
     // When button is clicked human player ships will be placed randomly
     // Computer player ships are always set randomly during game init
     placeShipsRandomlyButton.addEventListener('click', () => {
+      // Set up player ships in the game board array
       this.gameController.placeShipsRandomly(this.gameController.humanPlayer);
+
+      // Display ships on the player game board
+      this.boardRenderer.renderPlayerShips(
+        boardDivId,
+        this.gameController.humanPlayer.gameBoard.board // Human player game board
+      );
 
       // Toggle button display to none
       this.boardRenderer.toggleElementDisplay(randomlyPlaceShipsButton);
