@@ -44,6 +44,19 @@ class BoardRenderer {
     });
   }
 
+  // Displays win message on game over screen
+  renderWinMessage(gameOverMessageId) {
+    const messageDiv = document.getElementById(gameOverMessageId);
+    console.log(messageDiv);
+    messageDiv.textContent = 'You Win!';
+  }
+
+  // Displays lose message on game over screen
+  renderLoseMessage(gameOverMessageId) {
+    const messageDiv = document.getElementById(gameOverMessageId);
+    messageDiv.textContent = 'Game Over! You Lose';
+  }
+
   // Handle render errors
   renderErrorHandling(gameBoard, boardDiv, boardDivId) {
     if (!Array.isArray(gameBoard)) {
