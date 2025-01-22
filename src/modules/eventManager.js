@@ -6,7 +6,8 @@ class EventManager {
     computerBoardDivId,
     gameOverElement,
     startNewGameButton,
-    randomlyPlaceShipsButton
+    randomlyPlaceShipsButton,
+    gameOverMessageId
   ) {
     this.gameController = gameController;
     this.boardRenderer = boardRenderer;
@@ -15,14 +16,15 @@ class EventManager {
     this.gameOverElement = gameOverElement;
     this.startNewGameButton = startNewGameButton;
     this.randomlyPlaceShipsButton = randomlyPlaceShipsButton;
-
+    this.gameOverMessageId = gameOverMessageId;
     // Listen for game state changes
     this.gameController.onGameStateChange((newState) => {
       if (newState === 'ready') {
         this.addBoardEvents(
           computerBoardDivId,
           humanBoardDivId,
-          gameOverElement
+          gameOverElement,
+          gameOverMessageId
         );
       }
     });
@@ -47,12 +49,18 @@ class EventManager {
     });
   }
 
-  addBoardEvents(computerBoardDivId, humanBoardDivId, gameOverElement) {
+  addBoardEvents(
+    computerBoardDivId,
+    humanBoardDivId,
+    gameOverElement,
+    gameOverMessageId
+  ) {
     this.attachAttackListeners(
       // Attach attack events
       computerBoardDivId,
       humanBoardDivId,
       gameOverElement,
+      gameOverMessageId,
       (gameBoard, cell, row, col) => {
         this.boardRenderer.setCellColor(gameBoard, cell, row, col);
       }
@@ -85,7 +93,12 @@ class EventManager {
   // Board listeners
 
   // Attack clicks only attached to computer-board
-  attachAttackListeners(computerBoardDivId, humanBoardDivId, gameOverElement) {
+  attachAttackListeners(
+    computerBoardDivId,
+    humanBoardDivId,
+    gameOverElement,
+    gameOverMessageId
+  ) {
     const boardDiv = document.getElementById(computerBoardDivId); // Get board html element
     const cells = boardDiv.childNodes; // Get cell html elements
 
@@ -109,7 +122,8 @@ class EventManager {
               row,
               col,
               gameOverElement,
-              humanBoardDivId
+              humanBoardDivId,
+              gameOverMessageId
             );
           },
           { once: true }
@@ -162,6 +176,7 @@ class EventManager {
       button.addEventListener('click', () => {
         // Display the placeShipsRandomly button
         this.boardRenderer.toggleElementDisplay(randomlyPlaceShipsButton);
+
         // Set up game boards, render boards, etc
         this.startNewGame(
           humanBoardDivId,
@@ -220,7 +235,14 @@ class EventManager {
   }
 
   // This is the result of the attack and will change the gameBoard appearance accordingly
-  handleCellClick(cell, row, col, gameOverElement, humanBoardDivId) {
+  handleCellClick(
+    cell,
+    row,
+    col,
+    gameOverElement,
+    humanBoardDivId,
+    gameOverMessageId
+  ) {
     // Attack computer game board
     const humanAttackResult = this.gameController.processHumanAttack(row, col); // Human attack computer game board
 
@@ -240,6 +262,7 @@ class EventManager {
 
     // Game stops. Player wins game
     if (computerGameBoard.areAllShipsSunk()) {
+      this.boardRenderer.renderWinMessage(gameOverMessageId); // Set game over message to win
       this.triggerGameOverScreen(gameOverElement); // triggers if all computer ships are sunk
       return;
     }
@@ -278,6 +301,7 @@ class EventManager {
 
     // Game stops. Computer wins game
     if (humanGameBoard.areAllShipsSunk()) {
+      this.boardRenderer.renderLoseMessage(gameOverMessageId); // Set game over message to lose
       this.triggerGameOverScreen(gameOverElement); // triggers if all computer ships are sunk
       return;
     }
