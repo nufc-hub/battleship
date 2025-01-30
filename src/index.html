@@ -17,6 +17,7 @@
     <div id="boards" class="boards">
       <div class="left-side">
         <h2 class="fleet-title">Your fleet</h2>
+        <div id="placeShipsRandomlyDiv" class="place-ships-randomly-button-mobile"><button id="placeShipsRandomlyButton" class="place-ships-randomly-button">Deploy Fleet</button></div>
         <div id="humanBoard" class="board"></div>
       </div>
       <div class=" right-side">
@@ -24,10 +25,12 @@
         <div id="computerBoard" class="board"></div>
       </div>
     </div>
-    <div id="placeShipsRandomlyDiv" class="place-ships-randomly-button-div"><button id="placeShipsRandomlyButton" class="place-ships-randomly-button">Deploy Fleet</button></div>
+    <div id="placeShipsRandomlyDiv" class="place-ships-randomly-button-div"><button id="placeShipsRandomlyButton" class="place-ships-randomly-button-desktop">Deploy Fleet</button></div>
     <div id="gameOverDiv" class="game-over-overlay">
-      <p class="game-over-text">Game Over</p>
-      <button class="new-game-button">New Game</button>
+      <div class="game-over-content">      
+        <p id="gameOverText" class="game-over-text"></p>
+        <button class="new-game-button">New Game</button>
+      </div>
     </div>
   </body>
 </html>
