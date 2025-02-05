@@ -16,16 +16,21 @@
     <h1 class="game-title">Battleship</h1>
     <div id="boards" class="boards">
       <div class="left-side">
-        <h2 class="fleet-title">Your fleet</h2>
-        <div id="placeShipsRandomlyDiv" class="place-ships-randomly-button-mobile"><button id="placeShipsRandomlyButton" class="place-ships-randomly-button">Deploy Fleet</button></div>
-        <div id="humanBoard" class="board"></div>
+        <div class="left-side-top">
+          <h2 class="fleet-title">Your fleet</h2>
+          <div id="placeShipsRandomlyDiv" class="place-ships-randomly-button-div">
+            <button class="place-ships-randomly-button">Deploy Fleet</button>
+          </div>  
+        </div>
+        <div id="humanBoard" class="board-human"></div>
       </div>
       <div class=" right-side">
-        <h2 class="fleet-title">Enemy fleet</h2>
-        <div id="computerBoard" class="board"></div>
+        <div class="right-side-top">
+          <h2 class="fleet-title">Enemy fleet</h2>
+        </div>
+        <div id="computerBoard" class="board-enemy"></div>
       </div>
     </div>
-    <div id="placeShipsRandomlyDiv" class="place-ships-randomly-button-div"><button id="placeShipsRandomlyButton" class="place-ships-randomly-button-desktop">Deploy Fleet</button></div>
     <div id="gameOverDiv" class="game-over-overlay">
       <div class="game-over-content">      
         <p id="gameOverText" class="game-over-text"></p>
