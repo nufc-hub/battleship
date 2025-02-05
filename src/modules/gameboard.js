@@ -209,31 +209,16 @@ class GameBoard {
     };
   }
 
-  // Check if ship has been sunk
+  // Decrease number of ships on board
 
   handleSunkShip() {
     this.remainingShips -= 1; // Number of ships on board decrements
-
-    // Game over
-    if (this.areAllShipsSunk()) {
-      return {
-        message: 'Game over! All ships have been sunk!',
-        remainingShips: 0,
-      };
-    }
-
-    // Ship sunk but not game over
-    return {
-      message: 'A ship has been sunk',
-      remainingShips: this.remainingShips,
-    };
   }
 
   // Check if all ships have been sunk
 
   areAllShipsSunk() {
-    const allSunk = this.ships.every(({ ship }) => ship.isSunk());
-    return allSunk;
+    return this.ships.every(({ ship }) => ship.isSunk());
   }
 
   // Clears game board array, all ships and sets remaining ships to null
