@@ -1,6 +1,6 @@
 class Ship {
   constructor(length, isHorizontal) {
-    if (length <= 0 || length > 5) {
+    if (length <= 1 || length > 5) {
       // Validate ship length
       throw new Error('Invalid ship length. Must be between 1 and 5.');
     }
