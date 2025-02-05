@@ -14,6 +14,7 @@ class Ship {
 
   // Increases number of hits on ship.
   hit() {
+    if (this.isSunk()) return; // Prevent further hits if ship already sunk
     this.numberOfHits += 1;
   }
 
