@@ -53,22 +53,17 @@ class GameBoard {
   }
 
   placeShipHorizontal(row, col, ship) {
-    const { length, isHorizontal } = ship;
-    const rowIndex = row;
-    const colIndex = col;
+    const { length } = ship;
     const shipPositions = [];
 
-    // Horizontally
-    if (isHorizontal) {
-      for (let i = 0; i < length; i++) {
-        // When the loop reaches the destination of the coord
-        // change the board value from 0 to 1
-        this.board[rowIndex][colIndex + i] = 1;
-        shipPositions.push([rowIndex, colIndex + i]); // Send coords to shipPositions array
-      }
-
-      this.ships.push({ ship, positions: shipPositions }); // This is so the board can use the getShips function
+    for (let i = 0; i < length; i++) {
+      // When the loop reaches the destination of the coord
+      // change the board value from 0 to 1
+      this.board[row][col + i] = 1;
+      shipPositions.push([row, col + i]); // Send coords to shipPositions array
     }
+
+    this.ships.push({ ship, positions: shipPositions }); // This is so the board can use the getShips function
   }
 
   placeShipVertical(row, col, ship) {
