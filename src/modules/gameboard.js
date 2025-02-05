@@ -45,11 +45,9 @@ class GameBoard {
     }
 
     // Logic for placing ships
-    if (ship.isHorizontal) {
-      this.placeShipHorizontal(row, col, ship); // Places ship horizontally
-    } else {
-      this.placeShipVertical(row, col, ship); // Places ship vertically
-    }
+    ship.isHorizontal
+      ? this.placeShipHorizontal(row, col, ship)
+      : this.placeShipVertical(row, col, ship);
 
     this.remainingShips += 1; // Incremement remaining ships when a new ship is placed
   }
@@ -244,7 +242,6 @@ class GameBoard {
   // Check if all ships have been sunk
 
   areAllShipsSunk() {
-    console.log(this.ships);
     const allSunk = this.ships.every(({ ship }) => ship.isSunk());
     return allSunk;
   }
