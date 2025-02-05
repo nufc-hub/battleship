@@ -5,6 +5,13 @@ class Ship {
       throw new Error('Invalid ship length. Must be between 1 and 5.');
     }
 
+    // Is horizontal should be boolean
+    if (typeof isHorizontal !== 'boolean') {
+      throw new Error(
+        'Invalid ship orientation. Must be true (horizontal) or false (vertical).'
+      );
+    }
+
     this.length = length;
     this.isHorizontal = isHorizontal; // Game board will check ship orientation during placement
     this.numberOfHits = 0;
