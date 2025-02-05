@@ -112,18 +112,9 @@ class GameController {
       this.humanPlayer.resetPreviousAttack(); // Reset previousAttack set for both players
       this.computerPlayer.resetPreviousAttack();
 
-      this.gameState = 'gameOver';
+      this.setGameState('gameOver');
     }
   }
 }
 
-// Create ships
-
-// Add computer ships when creating the computer player and gameboard
-
-// Add human ships after creating the human player and gameboard
-
-// Add ships to the gamebaord
-
-// Add ability to restart game at anypoint and when game is over
 export default GameController;
