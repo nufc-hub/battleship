@@ -105,13 +105,13 @@ class GameController {
       humanGameBoardObj.areAllShipsSunk() || // Check if all ships are sunk
       computerGameBoardObj.areAllShipsSunk()
     ) {
+      this.setGameState('gameOver');
+
       humanGameBoardObj.resetGameBoard(); // Reset game board state for both players
       computerGameBoardObj.resetGameBoard();
 
       this.humanPlayer.resetPreviousAttack(); // Reset previousAttack set for both players
       this.computerPlayer.resetPreviousAttack();
-
-      this.setGameState('gameOver');
     }
   }
 }
