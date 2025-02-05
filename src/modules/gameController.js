@@ -80,10 +80,9 @@ class GameController {
           // Handle placement errors, e.g., overlap or out-of-bounds
           console.log(`Error placing ship: ${error.message}`);
         }
-
-        console.log(this.humanPlayer);
-        console.log(this.computerPlayer);
       }
+      console.log(this.humanPlayer);
+      console.log(this.computerPlayer);
     });
   }
 
