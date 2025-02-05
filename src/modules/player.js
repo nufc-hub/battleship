@@ -33,7 +33,7 @@ class Player {
   }
 
   resetPreviousAttack() {
-    this.previousAttack = new Set();
+    this.previousAttack.clear();
   }
 }
 
