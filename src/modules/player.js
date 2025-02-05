@@ -1,6 +1,6 @@
 class Player {
   constructor(isHuman, gameBoard) {
-    this.isHuman = isHuman; // Set to true if player is human, false if player is computer
+    this.isHuman = isHuman; // True if player is human, false if computer
     this.gameBoard = gameBoard;
     this.previousAttack = new Set(); // Track already hit coordinates to avoid duplicate hits
   }
@@ -27,12 +27,13 @@ class Player {
 
     // Then carry out the attack
 
-    let attackResult = null;
+    const attackResult = callback?.(row, col) ?? null; // If callback exists, call it; otherwise, return null
 
-    if (callback && typeof callback === 'function') {
-      attackResult = callback(row, col);
-    }
-    return { row, col, Result: attackResult }; // Return for debugging if needed
+    return { row, col, result: attackResult }; // Return for debugging if needed
+  }
+
+  resetPreviousAttack() {
+    this.previousAttack = new Set();
   }
 }
 
