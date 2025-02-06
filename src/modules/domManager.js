@@ -13,8 +13,16 @@ class DomManager {
     randomlyPlaceShipsButton
   ) {
     this.eventManager.clearEventListeners(humanBoardDivId, computerBoardDivId);
-    this.renderHumanGameBoard(humanBoardDivId);
-    this.renderComputerGameBoard(computerBoardDivId);
+
+    this.renderGameBoard(
+      this.gameController.humanPlayer.gameBoard.board,
+      humanBoardDivId
+    );
+    this.renderGameBoard(
+      this.gameController.computerPlayer.gameBoard.board,
+      computerBoardDivId
+    );
+
     this.eventManager.addButtonEvents(
       humanBoardDivId,
       computerBoardDivId,
@@ -24,18 +32,8 @@ class DomManager {
     );
   }
 
-  renderHumanGameBoard(humanBoardDivId) {
-    this.boardRenderer.renderBoard(
-      this.gameController.humanPlayer.gameBoard.board,
-      humanBoardDivId
-    );
-  }
-
-  renderComputerGameBoard(computerBoardDivId) {
-    this.boardRenderer.renderBoard(
-      this.gameController.computerPlayer.gameBoard.board,
-      computerBoardDivId
-    );
+  renderGameBoard(gameBoard, boardDivId) {
+    this.boardRenderer.renderBoard(gameBoard, boardDivId);
   }
 }
 
