@@ -30,25 +30,6 @@ class EventManager {
     });
   }
 
-  // Remove event listeners from board cells
-  clearEventListeners(humanBoardDivId, computerBoardDivId) {
-    const humanBoardDiv = document.getElementById(humanBoardDivId); // Get board html element
-    const humanboardCells = humanBoardDiv.childNodes; // Get cell html elements
-
-    const computerBoardDiv = document.getElementById(computerBoardDivId); // Get board html element
-    const computerboardCells = computerBoardDiv.childNodes; // Get cell html elements
-
-    humanboardCells.forEach((cell) => {
-      const newcell = cell.cloneNode(true); // Clone the element to remove listeners
-      cell.parentNode.replaceChild(newcell, cell); // Replace old element with new
-    });
-
-    computerboardCells.forEach((cell) => {
-      const newcell = cell.cloneNode(true); // Clone the element to remove listeners
-      cell.parentNode.replaceChild(newcell, cell); // Replace old element with new
-    });
-  }
-
   addBoardEvents(
     computerBoardDivId,
     humanBoardDivId,
