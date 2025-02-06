@@ -66,7 +66,6 @@ class BoardRenderer {
     if (!boardDiv) {
       // Check boardDiv exists
       console.error(`Board container with ID "${boardDivId}" not found.`);
-      return;
     }
     return;
   }
