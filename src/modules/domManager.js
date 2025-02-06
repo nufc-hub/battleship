@@ -37,12 +37,6 @@ class DomManager {
       computerBoardDivId
     );
   }
-
-  // Not used currently - clears cell in dom but not in player game board array
-  clearBoard(boardDivId) {
-    const boardDiv = document.getElementById(boardDivId);
-    boardDiv.replaceChildren(); // Delete cells in game board
-  }
 }
 
 export default DomManager;
