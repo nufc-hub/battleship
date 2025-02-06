@@ -9,39 +9,33 @@ class DomManager {
     humanBoardDivId,
     computerBoardDivId,
     gameOverElement,
-    startNewGameButton
+    startNewGameButton,
+    randomlyPlaceShipsButton
   ) {
     this.renderHumanGameBoard(humanBoardDivId);
     this.renderComputerGameBoard(computerBoardDivId);
     this.eventManager.clearEventListeners(humanBoardDivId, computerBoardDivId);
-    this.eventManager.attachEvents(
-      computerBoardDivId,
+    this.eventManager.addButtonEvents(
       humanBoardDivId,
+      computerBoardDivId,
       gameOverElement,
-      startNewGameButton
+      startNewGameButton,
+      randomlyPlaceShipsButton
     );
   }
 
   renderHumanGameBoard(humanBoardDivId) {
-    this.boardRenderer.renderBoard(this.getHumanGameBoard(), humanBoardDivId);
+    this.boardRenderer.renderBoard(
+      this.gameController.humanPlayer.gameBoard.board,
+      humanBoardDivId
+    );
   }
 
   renderComputerGameBoard(computerBoardDivId) {
     this.boardRenderer.renderBoard(
-      this.getComputerGameBoard(),
+      this.gameController.computerPlayer.gameBoard.board,
       computerBoardDivId
     );
-  }
-
-  // Get game boards from players initialised in gameController
-  getHumanGameBoard() {
-    const gameBoard = this.gameController.humanPlayer.gameBoard;
-    return gameBoard.board; // Return the board array
-  }
-
-  getComputerGameBoard() {
-    const gameBoard = this.gameController.computerPlayer.gameBoard;
-    return gameBoard.board; // Return the board array
   }
 
   // Not used currently - clears cell in dom but not in player game board array
