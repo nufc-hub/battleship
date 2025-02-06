@@ -28,8 +28,6 @@ class BoardRenderer {
   // Renders player ships onto game board
   renderPlayerShips(boardDivId, gameBoard) {
     const boardDiv = document.getElementById(boardDivId);
-    console.log(boardDiv); // This is keeping old css classes
-    console.log(gameBoard); // Gameboard is not being reset
 
     gameBoard.forEach((row, rowIndex) => {
       row.forEach((_, colIndex) => {
@@ -38,7 +36,6 @@ class BoardRenderer {
         // Update cell colour based on game state
 
         this.setCellColor(gameBoard, cellElement, rowIndex, colIndex);
-        console.log(cellElement.className);
       });
     });
   }
@@ -46,7 +43,6 @@ class BoardRenderer {
   // Displays win message on game over screen
   renderWinMessage(gameOverMessageId) {
     const messageDiv = document.getElementById(gameOverMessageId);
-    console.log(messageDiv);
     messageDiv.textContent = 'You Win!';
   }
 
