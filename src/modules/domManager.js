@@ -12,9 +12,9 @@ class DomManager {
     startNewGameButton,
     randomlyPlaceShipsButton
   ) {
+    this.eventManager.clearEventListeners(humanBoardDivId, computerBoardDivId);
     this.renderHumanGameBoard(humanBoardDivId);
     this.renderComputerGameBoard(computerBoardDivId);
-    this.eventManager.clearEventListeners(humanBoardDivId, computerBoardDivId);
     this.eventManager.addButtonEvents(
       humanBoardDivId,
       computerBoardDivId,
