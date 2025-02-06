@@ -17,7 +17,6 @@ class BoardRenderer {
       row.forEach((col, colIndex) => {
         const cell = document.createElement('div');
         cell.classList = 'board-cell';
-        cell.dataset.value = col; // Placeholder.Change this later to represent the ship there.
         cell.dataset.row = rowIndex;
         cell.dataset.col = colIndex;
 
