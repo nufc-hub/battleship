@@ -118,11 +118,7 @@ class BoardRenderer {
     const computedStyle = window.getComputedStyle(div);
 
     // Toggle display based on the computed value
-    if (computedStyle.display === 'none') {
-      div.style.display = 'flex'; // Set inline style to flex
-    } else {
-      div.style.display = 'none'; // Set inline style to none
-    }
+    div.style.display = computedStyle.display === 'none' ? 'flex' : 'none';
   }
 }
 
