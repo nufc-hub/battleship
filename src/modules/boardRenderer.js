@@ -54,7 +54,7 @@ class BoardRenderer {
   // Displays lose message on game over screen
   renderLoseMessage(gameOverMessageId) {
     const messageDiv = document.getElementById(gameOverMessageId);
-    messageDiv.textContent = 'Game Over! You Lose';
+    messageDiv.textContent = 'You Lose! ';
   }
 
   // Handle render errors
@@ -97,9 +97,9 @@ class BoardRenderer {
   // Check coords are within the gameBoard
   isIndexWithinBounds(gameBoard, row, col) {
     if (
-      row < 0 &&
-      row >= gameBoard.length &&
-      col < 0 &&
+      row < 0 ||
+      row >= gameBoard.length ||
+      col < 0 ||
       col >= gameBoard[row].length
     ) {
       console.error(`Invalid cell position: row=${row}, col=${col}`);
