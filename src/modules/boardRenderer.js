@@ -1,9 +1,5 @@
 class BoardRenderer {
-  constructor(gameController) {
-    this.gameController = gameController;
-  }
-
-  // Render gameBoard
+  // Render game board
   renderBoard(gameBoard, boardDivId) {
     const boardDiv = document.getElementById(boardDivId);
 
