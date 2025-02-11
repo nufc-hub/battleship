@@ -75,13 +75,10 @@ class GameController {
           player.gameBoard.placeShip(row, col, ship);
 
           placed = true; // Ship successfully placed and loop stops
-        } catch (error) {
-          // Handle placement errors, e.g., overlap or out-of-bounds
-          console.log(`Error placing ship: ${error.message}`);
+        } catch {
+          // Silently handle error, loop will retry
         }
       }
-      console.log(this.humanPlayer);
-      console.log(this.computerPlayer);
     });
   }
 
