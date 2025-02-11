@@ -2,7 +2,7 @@
 
 A JavaScript implementation of the classic Battleship game, built as part of [The Odin Project](https://www.theodinproject.com//lessons/node-path-javascript-battleship#introduction) curriculum. This project focuses on testing JavaScript functionality using Jest.
 
-[Live-App](https://nufc-hub.github.io/battleships/)
+[Live-App](https://nufc-hub.github.io/battleship/)
 
 ## **Features**
 
