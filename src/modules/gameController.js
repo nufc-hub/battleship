@@ -27,7 +27,7 @@ class GameController {
     this.stateChangeListeners.forEach((callback) => callback(this.gameState));
   }
 
-  // Used after ships have been placed. Possibly refactor to use for when game is over too. And for when a new game starts.
+  // Used after ships have been placed.
   setGameState(state) {
     this.gameState = state;
     this.notifyGameStateChange();
@@ -45,12 +45,12 @@ class GameController {
     this.placeShipsRandomly(this.computerPlayer);
   }
 
-  //Create a human player with its own gameBoard
+  //Create a human player with its own game board
   createHumanPlayer(gameBoard) {
     this.humanPlayer = new Player(true, gameBoard);
   }
 
-  //Create a computer player with its own gameBoard
+  //Create a computer player with its own game board
   createComputerPlayer(gameBoard) {
     this.computerPlayer = new Player(false, gameBoard);
   }
@@ -60,7 +60,6 @@ class GameController {
   }
 
   // Places all five ships radomly on the game board
-  // Use player parameter to set which players ships are placed randomly
   placeShipsRandomly(player) {
     this.ships.forEach((shipConfig) => {
       // Loop through each object in this.ships array
