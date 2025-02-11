@@ -87,6 +87,10 @@ body {
   width: 30rem;
 }
 
+.board-enemy {
+  cursor: crosshair;
+}
+
 .board-cell {
   border: 1px solid black;
   background-color: var(--metallic-silver); /* Metallic Silver */
