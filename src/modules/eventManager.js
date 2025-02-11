@@ -62,7 +62,7 @@ class EventManager {
     );
 
     this.attachStartNewGameListeners(
-      // attach start new game click events
+      // Attach start new game click events
       humanBoardDivId,
       computerBoardDivId,
       gameOverElement,
@@ -90,10 +90,7 @@ class EventManager {
           'click',
           () => {
             if (!this.gameController.isGameReady()) {
-              // Edit later to give a message on the screen
-              return console.warn(
-                'Game not ready yet. Place your ships first!'
-              );
+              return;
             }
             const row = parseInt(cell.dataset.row, 10); // Keep these in or not?
             const col = parseInt(cell.dataset.col, 10);
@@ -303,5 +300,3 @@ class EventManager {
 }
 
 export default EventManager;
-
-// Prevent click cell from becoming deactivated if cell is clicked before ships are placed
