@@ -1,7 +1,7 @@
-import GameBoard from './modules/gameboard.js';
-import GameController from './modules/gameController.js';
-import BoardRenderer from './modules/boardRenderer.js';
-import EventManager from './modules/eventManager.js';
+import GameBoard from './src/modules/gameboard.js';
+import GameController from './src/modules/gameController.js';
+import BoardRenderer from './src/modules/boardRenderer.js';
+import EventManager from './src/modules/eventManager.js';
 
 // DOM element IDs
 const HUMAN_BOARD_ID = 'humanBoard';
