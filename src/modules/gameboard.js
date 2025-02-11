@@ -9,7 +9,6 @@ class GameBoard {
     this.board = Array.from({ length: 10 }, () => Array(10).fill(0));
     this.ships = []; //Array to store placed ship and their position
     this.remainingShips = 0; // Used to track game over
-    // set it so that it equals the value of the placed ships when game starts
   }
 
   // Get ship at specified  coords from this.ships
@@ -57,8 +56,7 @@ class GameBoard {
     const shipPositions = [];
 
     for (let i = 0; i < length; i++) {
-      // When the loop reaches the destination of the coord
-      // change the board value from 0 to 1
+      // When the loop reaches the destination of the coord change the board value from 0 to 1
       this.board[row][col + i] = 1;
       shipPositions.push([row, col + i]); // Send coords to shipPositions array
     }
@@ -71,8 +69,7 @@ class GameBoard {
     const shipPositions = [];
 
     for (let i = 0; i < length; i++) {
-      // When the loop reaches the destination of the coord
-      // change the board value from 0 to 1
+      // When the loop reaches the destination of the coord change the board value from 0 to 1
       this.board[row + i][col] = 1;
       shipPositions.push([row + i, col]); // Send coords to shipPositions array
 
