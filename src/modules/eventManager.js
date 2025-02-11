@@ -207,9 +207,6 @@ class EventManager {
 
     // Toggle game over screen
     this.boardRenderer.toggleElementDisplay(gameOverElement);
-
-    console.log(this.gameController.humanPlayer.gameBoard);
-    console.log(this.gameController.computerPlayer.gameBoard);
   }
 
   // This is the result of the attack and will change the gameBoard appearance accordingly
@@ -222,21 +219,12 @@ class EventManager {
     gameOverMessageId
   ) {
     // Attack computer game board
-    const humanAttackResult = this.gameController.processHumanAttack(row, col); // Human attack computer game board
+    this.gameController.processHumanAttack(row, col); // Human attack computer game board
 
     // After human attack, update computer board visually
     const computerGameBoard = this.gameController.computerPlayer.gameBoard;
 
     this.boardRenderer.setCellColor(computerGameBoard.board, cell, row, col);
-
-    console.log(
-      'Human Attack - Row (0-based):',
-      row,
-      'Col (0-based):',
-      col,
-      humanAttackResult,
-      this.gameController.computerPlayer
-    );
 
     // Game stops. Player wins game
     if (computerGameBoard.areAllShipsSunk()) {
@@ -249,17 +237,7 @@ class EventManager {
       // Computer attacks human game board
       row: computerRow,
       col: computerCol,
-      Result: computerAttackResult,
     } = this.gameController.processComputerAttack();
-
-    console.log(
-      'Computer Attack - Row (0-based):',
-      computerRow,
-      'Col (0-based):',
-      computerCol,
-      computerAttackResult,
-      this.gameController.humanPlayer
-    );
 
     // Locate the corresponding cell in the human board's DOM
     const humanBoardDiv = document.getElementById(humanBoardDivId);
