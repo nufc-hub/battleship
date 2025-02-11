@@ -6,7 +6,7 @@ class BoardRenderer {
     boardDiv.replaceChildren(); // Clear the board first
 
     // Handle any errors
-    this.renderErrorHandling(gameBoard, boardDiv, boardDivId);
+    this.handleError(gameBoard, boardDiv, boardDivId);
 
     // Loop through gameBoard rendering it to webpage
     gameBoard.forEach((row, rowIndex) => {
@@ -48,19 +48,6 @@ class BoardRenderer {
     messageDiv.textContent = 'You Lose! ';
   }
 
-  // Handle render errors
-  renderErrorHandling(gameBoard, boardDiv, boardDivId) {
-    if (!Array.isArray(gameBoard)) {
-      // Check gameBoard is an array
-      throw new Error('Invalid game board: must be a 2D array.');
-    }
-    if (!boardDiv) {
-      // Check boardDiv exists
-      console.error(`Board container with ID "${boardDivId}" not found.`);
-    }
-    return;
-  }
-
   // References the board state to set the cell color
   setCellColor(gameBoard, cell, row, col) {
     // Validate the row and col indices
@@ -84,22 +71,6 @@ class BoardRenderer {
     }
   }
 
-  // Check coords are within the gameBoard
-  isIndexWithinBounds(gameBoard, row, col) {
-    if (
-      row < 0 ||
-      row >= gameBoard.length ||
-      col < 0 ||
-      col >= gameBoard[row].length
-    ) {
-      console.error(`Invalid cell position: row=${row}, col=${col}`);
-
-      return false;
-    }
-
-    return true;
-  }
-
   // Used for displaying/ hiding an html element
   toggleElementDisplay(element) {
     const div = document.getElementById(element);
@@ -115,6 +86,35 @@ class BoardRenderer {
 
     // Toggle display based on the computed value
     div.style.display = computedStyle.display === 'none' ? 'flex' : 'none';
+  }
+
+  // Handle render errors
+  handleError(gameBoard, boardDiv, boardDivId) {
+    if (!Array.isArray(gameBoard)) {
+      // Check gameBoard is an array
+      throw new Error('Invalid game board: must be a 2D array.');
+    }
+    if (!boardDiv) {
+      // Check boardDiv exists
+      console.error(`Board container with ID "${boardDivId}" not found.`);
+    }
+    return;
+  }
+
+  // Check coords are within the gameBoard
+  isIndexWithinBounds(gameBoard, row, col) {
+    if (
+      row < 0 ||
+      row >= gameBoard.length ||
+      col < 0 ||
+      col >= gameBoard[row].length
+    ) {
+      console.error(`Invalid cell position: row=${row}, col=${col}`);
+
+      return false;
+    }
+
+    return true;
   }
 }
 
