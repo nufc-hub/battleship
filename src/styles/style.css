@@ -80,10 +80,6 @@ body {
   font-style: normal;
   font-size: 2rem;
   color: var(--bright-cyan);
-  text-shadow:
-    0 0 1.5px var(--bright-cyan),
-    0 0 3px rgba(0, 212, 255, 0.15),
-    0 0 4.5px rgba(0, 212, 255, 0.1);
 }
 
 .board-human,
