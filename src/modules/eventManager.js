@@ -108,7 +108,7 @@ class EventManager {
         );
       });
     } else {
-      console.error(
+      throw new Error(
         `Board container with ID "${computerBoardDivId}" not found.`
       );
     }
