@@ -251,4 +251,12 @@ body {
   .game-over-overlay {
     align-items: stretch;
   }
+
+  .game-over-text {
+    font-size: 6rem;
+  }
+
+  .new-game-button {
+    font-size: 3rem;
+  }
 }
